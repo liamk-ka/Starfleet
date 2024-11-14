@@ -1,0 +1,5595 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Program exported to HTML using the KA Project Exporter by @MushyAvocado 
+https://www.khanacademy.org/computer-programming/ka-project-exporter/5195486791385088
+-->
+	
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>Starfleet</title>
+	<style>
+		
+		
+		/* Change the color as you want */
+		:root {
+			--background-color: #000000;
+		}
+		
+		
+		html, body, #wrapper {
+			overflow: hidden;
+			width: 100%;
+		    height: 100%;
+			margin: 0px;
+			padding: 0px;
+		    width: calc(100% + 1px);
+		}
+		
+		body {
+		    background-color: var(--background-color);
+		}
+		
+		
+		canvas {
+			width: fit-content;
+			height: fit-content;
+		}
+		
+		canvas:focus {
+			outline: none;
+		}
+		
+		/* Automatically fits to the remaining height and centers the canvas it contains */
+		#wrapper {
+			padding: 0px;
+			margin: 0px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+		}
+		
+</style>
+</head>
+<body id="wrapper">
+    <!-- Canvases with a class of "sketch" are applied to the program in the order runPJS() is called. -->
+    <canvas class="sketch"></canvas>
+	<!-- Load the PJS library -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Khan/processing-js@master/processing.js"></script>
+	<!-- The exporter script must be loaded before the program script -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Mushy-Avocado/KA-exporter@v1.0.1/exporter.js"></script>
+	<!-- Run Khan Academy program and import PJS -->
+	<script type="application/javascript">
+		
+		
+		function program() {
+		    
+		    title("Starfleet");
+		    size(900, 600);
+		    
+		    // All code goes here
+			/**
+			
+			   _____________   ___  ______   ______________
+			  / __/_  __/ _ | / _ \/ __/ /  / __/ __/_  __/
+			 _\ \  / / / __ |/ , _/ _// /__/ _// _/  / /   
+			/___/ /_/ /_/ |_/_/|_/_/ /____/___/___/ /_/    
+			                Liam K. 2024                                   
+			
+			
+			Hello and welcome to my newest minigame! 
+			
+			Please take a look at my subpage to support 
+			new and original content on Khan Academy:
+			https://www.khanacademy.org/cs/i/6652809926492160
+			
+			This program was created for The Hotlist Forge, 
+			which was hosted by Ace Rogers this year. Check out
+			our homepage here and subscribe for more incredible content:
+			https://www.khanacademy.org/cs/i/5930424442732544
+			
+			While I initially intended to enter this program into the Flight competition, you can see that I got slightly sidetracked. 
+			
+			
+			**/
+			
+			var scene = "load";
+			var click = false;
+			
+			var imgs = (function() {
+			
+				function scrap() {
+					background(0);
+					noStroke();
+					fill(255);
+					beginShape();
+					for (var i = 0; i < 360; i += random(36, 45)) {
+			
+						var d = random(10, 25);
+						vertex(25 + cos(i) * d, 25 + sin(i) * d);
+					}
+					endShape();
+			
+					var mask = get(0, 0, 50, 50);
+			
+					background(168, 180, 189);
+			
+					fill(142, 157, 163);
+					rect(0, 0, random(5, 25), 50);
+					fill(0, 5);
+					for (var i = 0; i < 10; i++) {
+						ellipse(random(0, 50), random(0, 50), 20, 20);
+					}
+					filter(BLUR, 4);
+			
+					fill(227, 68, 227);
+					quad(0, 0, 50, 0, 50, random(0, 25), 0, random(5, 25));
+					var img = get(0, 0, 50, 50);
+			
+					if (img) {
+						img.mask(mask);
+					}
+			
+					return (img);
+			
+				}
+				function laurel(clr1,clr2,weight){
+			    
+			        var laurelLeaf = function(x,y,r,s){
+			            pushMatrix();
+			            translate(x,y+50);
+			            rotate(r);
+			            translate(0,-50);
+			            scale(s);
+			            beginShape();
+			            vertex(0,0);
+			            bezierVertex(10 + random(-3,3),10 + random(-4,4),20+random(-3,3),40 + random(-4,4),0,50);
+			            bezierVertex(-13 + random(-3,3),40 + random(-4,4),-5+ random(-3,3),20 + random(-4,4),0,0);
+			            endShape();
+			            popMatrix();
+			        };
+			                        
+			        function laurelHalf(clr,clr2,weight){
+			            stroke(clr2);
+			            noFill();
+			            strokeWeight(weight);
+			            arcs(450,300,400,400,90,225);
+			            
+			            noStroke();
+			            stroke(clr2);
+			            strokeWeight(weight);
+			            fill(clr);
+			            laurelLeaf(310,110,40,1);
+			            laurelLeaf(294,122,0,1);
+			            laurelLeaf(291,131,70,1);
+			            laurelLeaf(278,143,-10,1);
+			            laurelLeaf(276,154,75,1);
+			            laurelLeaf(264,167,-15,1);
+			            laurelLeaf(267,174,80,1);
+			            laurelLeaf(257,192,-25,1);
+			            laurelLeaf(257,194,85,1);
+			            laurelLeaf(251,214,-35,1);
+			            laurelLeaf(251,214,90,1);
+			            laurelLeaf(250,243,-35,1);
+			            laurelLeaf(250,235,90,1);
+			            laurelLeaf(250,258,85,1);
+			            laurelLeaf(250,270,-45,1);
+			            laurelLeaf(253,295,-55,1);
+			            laurelLeaf(253,286,70,1);
+			            laurelLeaf(259,312,55,1);
+			            laurelLeaf(260,318,-70,1);
+			            laurelLeaf(264,326,70,1);
+			            laurelLeaf(270,342,-75,1);
+			            laurelLeaf(273,347,70,1);
+			            laurelLeaf(286,365,-80,1);
+			            laurelLeaf(286,366,60,1);
+			            laurelLeaf(300,381,-95,1);
+			            laurelLeaf(302,384,50,1);
+			            laurelLeaf(320,400,40,1);
+			            laurelLeaf(318,397,-105,1);
+			            laurelLeaf(329,407,-125,1);
+			            laurelLeaf(338,415,30,1);
+			            laurelLeaf(347,418,-135,1);
+			            laurelLeaf(359,430,20,1);
+			            laurelLeaf(359,430,-150,1);
+			            laurelLeaf(381,437,-150,1);
+			            laurelLeaf(384,437,10,1);
+			            laurelLeaf(404,446,10,1);
+			            laurelLeaf(423,448,10,1);
+			            laurelLeaf(447,451,10,1);
+			            laurelLeaf(398,443,-160,1);
+			            laurelLeaf(417,446,-170,1);
+			            laurelLeaf(437,446,-170,1);
+			            laurelLeaf(450,446,-180,1);
+			        }
+			        
+			        pushMatrix();
+			        translate(450,300);
+			        scale(1.1);
+			        translate(-450,-300);
+			        translate(0,-30);
+			        laurelHalf(clr1,clr2,weight);
+			        pushMatrix();
+			        translate(450,0);
+			        scale(-1,1);
+			        translate(-450,0);
+			        laurelHalf(clr1,clr2,weight);
+			        popMatrix();
+			        
+			        strokeWeight(weight * 3);
+			        stroke(clr2);
+			        fill(clr1);
+			        beginShape();
+			        
+			        for(var i = -90; i < 270 + 72; i += 72){
+			            curveVertex(450 + cos(i) * 100, 250 + sin(i) * 100);
+			            curveVertex(450 + cos(i + 36) * 50, 250 + sin(i + 36) * 50);
+			        }
+			        endShape(CLOSE);
+			        popMatrix();
+			        
+			        
+			    }
+			    var arcs = arc;
+			
+				return ({
+					fighterBody: {
+						w: 100,
+						h: 215,
+						d: function() {
+							//Draw the fighter shape
+							background(0);
+							noStroke();
+							fill(255);
+							beginShape();
+							vertex(300, 40);
+							bezierVertex(322, 75, 316, 100, 335, 150);
+							bezierVertex(340, 162, 340, 167, 350, 175);
+							bezierVertex(330, 200, 320, 225, 320, 250);
+							vertex(280, 250);
+							bezierVertex(280, 225, 270, 200, 250, 175);
+							bezierVertex(260, 167, 260, 162, 265, 150);
+							bezierVertex(284, 100, 278, 75, 300, 40);
+							endShape();
+							var mask = get(200, 0, 200, 300);
+			
+							//Draw the texturing
+							background(168, 180, 189);
+							fill(142, 157, 163);
+							rect(305, 0, 300, 300);
+							fill(0, 5);
+							for (var i = 0; i < 300; i++) {
+								ellipse(random(200, 400), random(0, 300), 20, 20);
+							}
+			
+							filter(BLUR, 4);
+							fill(131, 219, 207);
+							quad(280, 125, 290, 100, 310, 100, 320, 125);
+							fill(128, 196, 185);
+							quad(320, 125, 305, 175, 295, 175, 280, 125);
+							noFill();
+							stroke(142, 157, 163);
+							strokeWeight(3);
+							beginShape();
+							vertex(290, 100);
+							vertex(310, 100);
+							vertex(320, 125);
+							vertex(305, 175);
+							vertex(295, 175);
+							vertex(280, 125);
+							endShape(CLOSE);
+							var fighterBody = get(200, 0, 200, 300);
+			
+							//Mask it!
+							if (fighterBody) {
+								fighterBody.mask(mask);
+							}
+			
+							//Draw it!
+							background(255, 0);
+							image(fighterBody, -50, -40);
+							noStroke();
+							fill(130, 130, 140);
+							quad(30, 210, 70, 210, 66, 225, 34, 225);
+							stroke(0, 20);
+							strokeWeight(2);
+							for (var i = 0; i < 5; i++) {
+								line(35 + i * 7.5, 211, 38 + i * 6, 223);
+							}
+						}
+					},
+					fighterWing: {
+						w: 100,
+						h: 90,
+						d: function() {
+							//Draw the wing outline
+							background(0);
+							fill(255);
+							pushMatrix();
+							translate(30, 0);
+							scale(-1, 1);
+							noStroke();
+							beginShape();
+							vertex(0, 0);
+							vertex(-35, 30);
+							vertex(-30, 35);
+							vertex(-32, 55);
+							vertex(-50, 60);
+							vertex(-66, 84);
+							vertex(-62, 88);
+							vertex(-60, 85);
+							vertex(30, 60);
+							endShape();
+							rect(-65, 20, 2, 65);
+							triangle(-65, 85, -55, 80, -65, 65);
+							popMatrix();
+							var wingMask1 = get(0, 0, 100, 90);
+			
+							//Draw the wing texture
+							background(150, 150, 160);
+							strokeWeight(1);
+							for (var i = 0; i < 50; i++) {
+								stroke(0, 75 - i * 1.5);
+								line(30 + i, 0, -20 + i, 90);
+							}
+							noStroke();
+							for (var i = 0; i < 20; i++) {
+								fill(0, 7);
+								ellipse(random(0, 100), random(0, 100), 10, 10);
+							}
+							filter(BLUR, 1);
+							var wingImage1 = get(0, 0, 100, 90);
+			
+							//Mask the wing
+							if (wingImage1) {
+								wingImage1.mask(wingMask1);
+							}
+			
+							//Draw the little blue bit on the wing
+							background(255, 0);
+							fill(111, 212, 209);
+							stroke(150, 150, 160);
+							strokeWeight(2);
+							triangle(59, 30, 50, 60, 76, 60);
+							strokeWeight(1);
+							for (var i = 0; i < 10; i++) {
+								stroke(0, 100, 200, i * 5);
+								line(59 - i, 30, 76 - i, 60);
+							}
+							image(wingImage1, 0, 0);
+							stroke(111, 212, 209);
+							strokeWeight(2);
+							line(62, 39, 32, 13);
+						}
+					},
+					enemyFighterBody: {
+						w: 100,
+						h: 215,
+						d: function() {
+							//Draw the fighter shape
+							background(0);
+							noStroke();
+							fill(255);
+							beginShape();
+							vertex(300, 40);
+							bezierVertex(322, 75, 316, 100, 335, 150);
+							bezierVertex(340, 162, 340, 167, 350, 175);
+							bezierVertex(330, 200, 320, 225, 320, 250);
+							vertex(280, 250);
+							bezierVertex(280, 225, 270, 200, 250, 175);
+							bezierVertex(260, 167, 260, 162, 265, 150);
+							bezierVertex(284, 100, 278, 75, 300, 40);
+							endShape();
+							var mask = get(200, 0, 200, 300);
+			
+							//Draw the texturing
+							background(168, 180, 189);
+							fill(142, 157, 163);
+							rect(305, 0, 300, 300);
+							fill(0, 5);
+							for (var i = 0; i < 300; i++) {
+								ellipse(random(200, 400), random(0, 300), 20, 20);
+							}
+			
+							filter(BLUR, 4);
+							fill(222, 66, 191);
+							quad(280, 125, 290, 100, 310, 100, 320, 125);
+							fill(199, 108, 185);
+							quad(320, 125, 305, 175, 295, 175, 280, 125);
+							noFill();
+							stroke(142, 157, 163);
+							strokeWeight(3);
+							beginShape();
+							vertex(290, 100);
+							vertex(310, 100);
+							vertex(320, 125);
+							vertex(305, 175);
+							vertex(295, 175);
+							vertex(280, 125);
+							endShape(CLOSE);
+							var fighterBody = get(200, 0, 200, 300);
+			
+							//Mask it!
+							if (fighterBody) {
+								fighterBody.mask(mask);
+							}
+			
+							//Draw it!
+							background(255, 0);
+							image(fighterBody, -50, -40);
+							noStroke();
+							fill(130, 130, 140);
+							quad(30, 210, 70, 210, 66, 225, 34, 225);
+							stroke(0, 20);
+							strokeWeight(2);
+							for (var i = 0; i < 5; i++) {
+								line(35 + i * 7.5, 211, 38 + i * 6, 223);
+							}
+						},
+					},
+					enemyFighterWing: {
+						w: 100,
+						h: 90,
+						d: function() {
+							//Draw the wing outline
+							background(0);
+							fill(255);
+							pushMatrix();
+							translate(30, 0);
+							scale(-1, 1);
+							noStroke();
+							beginShape();
+							vertex(0, 0);
+							vertex(-35, 30);
+							vertex(-30, 35);
+							vertex(-32, 55);
+							vertex(-50, 60);
+							vertex(-66, 84);
+							vertex(-62, 88);
+							vertex(-60, 85);
+							vertex(30, 60);
+							endShape();
+							rect(-65, 20, 2, 65);
+							triangle(-65, 85, -55, 80, -65, 65);
+							popMatrix();
+							var wingMask1 = get(0, 0, 100, 90);
+			
+							//Draw the wing texture
+							background(150, 150, 160);
+							strokeWeight(1);
+							for (var i = 0; i < 50; i++) {
+								stroke(0, 75 - i * 1.5);
+								line(30 + i, 0, -20 + i, 90);
+							}
+							noStroke();
+							for (var i = 0; i < 20; i++) {
+								fill(0, 7);
+								ellipse(random(0, 100), random(0, 100), 10, 10);
+							}
+							filter(BLUR, 1);
+							var wingImage1 = get(0, 0, 100, 90);
+			
+							//Mask the wing
+							if (wingImage1) {
+								wingImage1.mask(wingMask1);
+							}
+			
+							//Draw the little blue bit on the wing
+							background(255, 0);
+							fill(252, 151, 232);
+							stroke(150, 150, 160);
+							strokeWeight(2);
+							triangle(59, 30, 50, 60, 76, 60);
+							strokeWeight(1);
+							for (var i = 0; i < 10; i++) {
+								stroke(200, 0, 0, i * 5);
+								line(59 - i, 30, 76 - i, 60);
+							}
+							image(wingImage1, 0, 0);
+							stroke(252, 151, 232);
+							strokeWeight(2);
+							line(62, 39, 32, 13);
+						}
+					},
+					enemyLaserFighterBody: {
+						w: 100,
+						h: 100,
+						d: function() {
+							background(0);
+							fill(255);
+							noStroke();
+							beginShape();
+							vertex(50, 0);
+							bezierVertex(27, 0, 27, 25, 27, 25);
+							bezierVertex(25, 50, 40, 70, 40, 100);
+							vertex(60, 100);
+							bezierVertex(60, 70, 75, 50, 73, 25);
+							bezierVertex(73, 25, 73, 0, 50, 0);
+							endShape();
+							var bodyMask = get(0, 0, 100, 100);
+			
+							background(168, 180, 189);
+							fill(142, 157, 163);
+							rect(50, 0, 300, 300);
+							fill(0, 5);
+							for (var i = 0; i < 50; i++) {
+								ellipse(random(0, 100), random(0, 100), 20, 20);
+							}
+							filter(BLUR, 4);
+			
+							fill(232, 55, 191);
+							triangle(42, 8, 30, 20, 45, 30);
+							fill(209, 52, 175);
+							quad(45, 5, 55, 5, 53, 30, 47, 30);
+							fill(201, 0, 157);
+							triangle(58, 8, 70, 20, 55, 30);
+							fill(0, 50);
+							rect(0, 93, 100, 10);
+							var bodyImg = get(0, 0, 100, 100);
+			
+							if (bodyImg) {
+								bodyImg.mask(bodyMask);
+							}
+			
+							background(255, 0);
+							image(bodyImg, 0, 0);
+						}
+					},
+					enemyLaserFighterWing: {
+						w: 100,
+						h: 200,
+						d: function() {
+							background(0);
+							fill(255);
+							noStroke();
+							beginShape();
+							vertex(100, 0);
+							vertex(95, 50);
+							vertex(100, 55);
+							vertex(95, 100);
+							bezierVertex(95, 120, 120, 120, 120, 120);
+							vertex(140, 120);
+							bezierVertex(90, 150, 116, 180, 90, 200);
+							vertex(60, 150);
+							vertex(65, 100);
+							bezierVertex(91, 50, 83, 20, 100, 0);
+							endShape();
+							var wingMask = get(50, 0, 100, 200);
+			
+							background(150, 150, 160);
+							noStroke();
+							for (var i = 0; i < 50; i++) {
+								fill(0, i * 2);
+								rect(40 + i, 0, 1, 200);
+							}
+							for (var i = 0; i < 20; i++) {
+								fill(0, 7);
+								ellipse(random(0, 100), random(0, 200), 10, 10);
+							}
+							filter(BLUR, 1);
+			
+							fill(232, 55, 191);
+							beginShape();
+							vertex(45, 10);
+							vertex(38, 50);
+							vertex(20, 100);
+							vertex(10, 150);
+							vertex(0, 150);
+							vertex(0, 0);
+							endShape();
+							var wingImg = get(0, 0, 100, 200);
+			
+							if (wingImg) {
+								wingImg.mask(wingMask);
+							}
+			
+							pushMatrix();
+							translate(100, 0);
+							scale(-1, 1);
+							background(255, 0);
+							image(wingImg, 0, 0);
+							popMatrix();
+						}
+					},
+					enemyHomingFighterBody: {
+						w: 60,
+						h: 130,
+						d: function() {
+							noStroke();
+							fill(255);
+							background(0);
+							beginShape();
+							vertex(50, 0);
+							bezierVertex(40, 3, 35, 17, 35, 20);
+							bezierVertex(35, 70, 30, 65, 25, 70);
+							vertex(35, 75);
+							vertex(25, 120);
+							vertex(40, 120);
+							bezierVertex(35, 110, 50, 100, 50, 100);
+							bezierVertex(50, 100, 65, 110, 60, 120);
+							vertex(75, 120);
+							vertex(65, 75);
+							vertex(75, 70);
+							bezierVertex(70, 65, 65, 70, 65, 20);
+							bezierVertex(65, 17, 60, 3, 50, 0);
+							endShape();
+							var bodyMask = get(0, 0, 100, 120);
+			
+							background(168, 180, 189);
+							fill(142, 157, 163);
+							rect(52, 0, 300, 300);
+							fill(0, 5);
+							for (var i = 0; i < 50; i++) {
+								ellipse(random(0, 100), random(0, 120), 20, 20);
+							}
+							filter(BLUR, 4);
+			
+							pushMatrix();
+							translate(0, 30);
+							stroke(186, 112, 172);
+							strokeWeight(2);
+							fill(217, 100, 194);
+							ellipse(50, 50, 20, 30);
+			
+							noStroke();
+							fill(0, 20);
+							ellipse(51, 57, 15, 15);
+							fill(255, 10);
+							for (var i = 0; i < 5; i++) {
+								ellipse(45 + i * 1, 40 + i * 2, 15 - i, 20 - i);
+							}
+							popMatrix();
+			
+							fill(0, 50);
+							rect(0, 113, 100, 10);
+							fill(230, 70, 235);
+							rect(0, 118, 100, 10);
+							var bodyImg = get(0, 0, 100, 120);
+			
+							if (bodyImg) {
+								bodyImg.mask(bodyMask);
+							}
+			
+							background(0);
+							fill(255);
+							beginShape();
+							vertex(35, 95);
+							vertex(65, 95);
+							vertex(65, 120);
+							vertex(60, 130);
+							vertex(40, 130);
+							vertex(35, 120);
+							endShape();
+							var thrustMask = get(0, 0, 100, 130);
+			
+							background(122, 145, 161);
+							for (var i = 0; i < 15; i++) {
+								fill(255, 255, 255, cos(i * 6) * 50);
+								rect(35 + i, 0, 1, 130);
+								fill(0, cos(i * 6) * 50);
+								rect(65 - i, 0, 1, 130);
+								fill(0, 60 - i * 4);
+								rect(0, 100 + i * 2, 100, 2);
+							}
+							fill(230, 70, 235);
+							rect(0, 127, 100, 10);
+							var thrustImg = get(0, 0, 100, 130);
+			
+							if (thrustImg) {
+								thrustImg.mask(thrustMask);
+							}
+			
+							background(255, 0);
+			
+							image(thrustImg, -20, 0);
+							image(bodyImg, -20, 0);
+							var img = get(0, 0, 60, 130);
+			
+							background(255, 0);
+							image(img, 0, 0);
+						}
+					},
+					enemyHomingFighterWing: {
+						w: 50,
+						h: 50,
+						d: function() {
+			                noStroke();
+			                strokeWeight(1);
+							background(0);
+							fill(255);
+							beginShape();
+							vertex(50, 0);
+							bezierVertex(40, 20, 30, 20, 0, 20);
+							vertex(0, 20);
+							vertex(5, 40);
+							vertex(50, 50);
+							endShape();
+							var wingMask2 = get(0, 0, 50, 50);
+			
+							background(168, 180, 189);
+							for (var i = 0; i < 35; i++) {
+								fill(0, i * 3);
+								rect(15 + i, 0, 1, 50);
+							}
+							fill(0, 5);
+							for (var i = 0; i < 10; i++) {
+								ellipse(random(0, 50), random(0, 50), 20, 20);
+							}
+							fill(233, 124, 237);
+							quad(0, 20, 5, 19, 10, 41, 0, 40);
+							var wingImg2 = get(0, 0, 50, 50);
+			
+							if (wingImg2) {
+								wingImg2.mask(wingMask2);
+							}
+			
+							background(255, 0);
+							image(wingImg2, 0, 0);
+						}
+					},
+					enemyKamikazeFighterBody: {
+						w: 40,
+						h: 120,
+						d: function() {
+							background(0);
+							noStroke();
+							fill(255);
+							beginShape();
+							vertex(50, 0);
+							vertex(60, 20);
+							vertex(70, 70);
+							vertex(70, 100);
+							bezierVertex(60, 110, 60, 110, 60, 120);
+							vertex(40, 120);
+							bezierVertex(40, 110, 40, 110, 30, 100);
+							vertex(30, 70);
+							vertex(40, 20);
+							endShape(CLOSE);
+							var mask = get(30, 0, 40, 120);
+			
+							background(168, 180, 189);
+							fill(142, 157, 163);
+							rect(24, 0, 300, 300);
+							fill(0, 5);
+							for (var i = 0; i < 30; i++) {
+								ellipse(random(0, 40), random(0, 120), 20, 20);
+							}
+							filter(BLUR, 4);
+			
+							stroke(128, 148, 156);
+							strokeWeight(2);
+							fill(233, 124, 237);
+							ellipse(20, 50, 20, 30);
+							noStroke();
+							fill(255, 50);
+							ellipse(18, 53, 15, 20);
+							ellipse(17, 55, 10, 12);
+			
+							var img = get(0, 0, 40, 120);
+			
+							if (img) {
+								img.mask(mask);
+							}
+			
+							background(255, 0);
+							image(img, 0, 0);
+						}
+					},
+					enemyKamikazeFighterWing: {
+						w: 80,
+						h: 60,
+						d: function() {
+							background(0);
+			                fill(255);
+			                pushMatrix();
+			                translate(-30, -55);
+			                beginShape();
+			                vertex(104, 65);
+			                bezierVertex(80, 80, 50, 80, 50, 100);
+			                vertex(50,110);
+			                vertex(104, 105);
+			                endShape();
+			                
+			                popMatrix();
+			                
+			                var wingMask = get(0,0,80,60);
+			                
+			                background(255,0);
+			                background(158, 171, 181);
+			                noStroke();
+			                for(var i = 0; i < 40; i ++){
+			                    fill(0, i * 2);
+			                    rect(40 + i, 0, 1, 60);
+			                }
+			                
+			                fill(233, 124, 237);
+			                quad(0,0, 0, 70, 20, 80, 35, 0);
+			                var wingImg = get(0,0,80,60);
+			                
+			                if(wingImg){
+			                    wingImg.mask(wingMask);
+			                }
+			                
+			                background(255,0);
+			                image(wingImg, 0, 0);
+						}
+					},
+					enemyArmoredFighterBody: {
+						w: 100,
+						h: 160,
+						d: function() {
+							pushMatrix();
+			                translate(0,10);
+			                noStroke();
+			                background(0);
+							fill(255);
+							beginShape();
+							vertex(50, -10);
+							bezierVertex(30, 0, 30, 15, 30, 20);
+							vertex(25, 20);
+							vertex(20, 60);
+							bezierVertex(10, 60, 10, 70, 10, 70);
+							vertex(10, 90);
+							bezierVertex(10, 130, 20, 140, 20, 140);
+							vertex(35, 140);
+							vertex(40, 150);
+							vertex(60, 150);
+							vertex(65, 140);
+							vertex(80, 140);
+							bezierVertex(80, 140, 90, 130, 90, 90);
+							vertex(90, 70);
+							bezierVertex(90, 70, 90, 60, 80, 60);
+							vertex(75, 20);
+							vertex(70, 20);
+							bezierVertex(70, 15, 70, 0, 50, -10);
+							endShape();
+							popMatrix();
+							var mask = get(0, 0, 100, 160);
+			
+							background(168, 180, 189);
+							fill(142, 157, 163);
+							rect(54, 0, 300, 300);
+							fill(0, 5);
+							for (var i = 0; i < 150; i++) {
+								ellipse(random(0, 100), random(0, 300), 20, 20);
+							}
+			
+			
+							filter(BLUR, 4);
+			
+							pushMatrix();
+							translate(50, 105);
+							scale(0.9);
+							translate(-50, -151);
+							fill(134, 148, 153);
+							ellipse(50, 105, 45, 35);
+							fill(232, 55, 191);
+							triangle(30, 100, 37, 120, 43, 90);
+							fill(209, 52, 175);
+							quad(40, 120, 60, 120, 53, 90, 47, 90);
+							fill(201, 0, 157);
+							triangle(70, 100, 63, 120, 57, 90);
+							popMatrix();
+							var img = get(0, 0, 100, 160);
+			
+							if (img) {
+								img.mask(mask);
+							}
+			
+							background(255, 0);
+							image(img, 0, 0);
+						}
+					},
+					enemyArmoredFighterWing: {
+						w: 50,
+						h: 180,
+						d: function() {
+							background(0);
+							fill(255);
+							noStroke();
+							beginShape();
+							vertex(75, 70);
+							vertex(65, 50);
+							vertex(60, 10);
+							vertex(50, 10);
+							vertex(30, 65);
+							vertex(40, 75);
+							vertex(40, 100);
+							vertex(30, 110);
+							vertex(30, 170);
+							vertex(40, 170);
+							vertex(80, 190);
+							endShape();
+							var wingMask = get(30, 10, 50, 180);
+			
+							background(154, 164, 171);
+							for (var i = 0; i < 35; i++) {
+								fill(0, i * 3);
+								rect(15 + i, 0, 1, 180);
+							}
+							fill(0, 3);
+							for (var i = 0; i < 30; i++) {
+								ellipse(random(0, 50), random(0, 180), 20, 20);
+							}
+			
+							stroke(227, 77, 177);
+							strokeWeight(5);
+							line(2, 70, 2, 170);
+							line(2, 60, 22, 0);
+			
+							var wingImg = get(0, 0, 50, 180);
+			
+							if (wingImg) {
+								wingImg.mask(wingMask);
+							}
+			
+							background(255, 0);
+							image(wingImg, 0, 0);
+						},
+					},
+					enemyDoubleFighterBody: {
+						w: 100,
+						h: 100,
+						d: function() {
+							background(0);
+							noStroke();
+							fill(255);
+							beginShape();
+							vertex(50, 0);
+							bezierVertex(40, 0, 40, 20, 30, 20);
+							vertex(40, 30);
+							bezierVertex(35, 35, 37, 41, 20, 50);
+							vertex(40, 90);
+							vertex(40, 100);
+							vertex(60, 100);
+							vertex(60, 90);
+							vertex(80, 50);
+							bezierVertex(63, 41, 65, 35, 60, 30);
+							vertex(70, 20);
+							bezierVertex(60, 20, 60, 0, 50, 0);
+							endShape();
+							var bodyMask = get(0, 0, 100, 100);
+			
+							//Draw the texturing
+							background(168, 180, 189);
+							fill(142, 157, 163);
+							rect(53, 0, 300, 300);
+							fill(0, 5);
+							for (var i = 0; i < 50; i++) {
+								ellipse(random(0, 100), random(0, 100), 20, 20);
+							}
+			
+							filter(BLUR, 4);
+			
+							strokeWeight(2);
+							stroke(138, 138, 150);
+							fill(233, 124, 237);
+							beginShape();
+							vertex(50, 40);
+							vertex(43, 50);
+							vertex(40, 70);
+							vertex(50, 80);
+							endShape();
+			
+							fill(224, 110, 230);
+							beginShape();
+							vertex(50, 40);
+							vertex(57, 50);
+							vertex(60, 70);
+							vertex(50, 80);
+							endShape();
+			
+							noStroke();
+			
+							var bodyImg = get(0, 0, 100, 100);
+			
+							if (bodyImg) {
+								bodyImg.mask(bodyMask);
+							}
+			
+							background(255, 0);
+							image(bodyImg, 0, 0);
+						}
+					},
+					enemyDoubleFighterWing: {
+						w: 70,
+						h: 40,
+						d: function() {
+						    noStroke();
+						    strokeWeight(1);
+							background(0);
+							fill(255);
+							beginShape();
+							vertex(60, 50);
+							bezierVertex(40, 65, 20, 65, 10, 65);
+							vertex(0, 55);
+							vertex(10, 85);
+							bezierVertex(20, 85, 40, 85, 70, 90);
+							endShape();
+							ellipse(33, 70, 7, 30);
+							var wingMask = get(0, 50, 70, 40);
+			
+							background(158, 171, 181);
+							for (var i = 0; i < 50; i++) {
+								fill(0, 75 - i * 1.5);
+								rect(70 - i, 0, 1, 40);
+							}
+							fill(159, 177, 194);
+							ellipse(33, 15, 7, 30);
+							fill(0, 15);
+							ellipse(35, 15, 4, 26);
+			
+							stroke(233, 124, 237);
+							strokeWeight(4);
+							line(70, 39, 50, 35);
+							line(50, 35, 0, 32);
+			
+							var wingImg = get(0, 0, 70, 40);
+			
+							if (wingImg) {
+								wingImg.mask(wingMask);
+							}
+			
+							background(255, 0);
+							image(wingImg, 0, 0);
+						}
+					},
+					enemyMothershipBody: {
+						w: 100,
+						h: 175,
+						d: function() {
+							background(0);
+							noStroke();
+							fill(255);
+							beginShape();
+							vertex(150, 0);
+							vertex(140, 15);
+							vertex(135, 50);
+							bezierVertex(130, 55, 125, 55, 120, 70);
+							bezierVertex(115, 80, 110, 85, 105, 85);
+							vertex(110, 125);
+							bezierVertex(115, 145, 125, 160, 135, 160);
+							vertex(135, 175);
+							vertex(165, 175);
+							vertex(165, 160);
+							bezierVertex(175, 160, 185, 145, 190, 125);
+							vertex(195, 85);
+							bezierVertex(190, 85, 185, 80, 180, 70);
+							bezierVertex(175, 55, 170, 55, 165, 50);
+							vertex(160, 15);
+							vertex(150, 0);
+							endShape();
+							var bodyMask = get(100, 0, 100, 175);
+			
+							//Draw the texturing
+							background(168, 180, 189);
+			
+							fill(142, 157, 163);
+							rect(53, 0, 300, 300);
+							fill(0, 5);
+							for (var i = 0; i < 80; i++) {
+								ellipse(random(0, 100), random(0, 175), 20, 20);
+							}
+			
+							filter(BLUR, 4);
+			
+							pushMatrix();
+							translate(50, 100);
+							scale(0.8);
+							translate(-50, -80);
+			
+							strokeWeight(2);
+							stroke(127, 127, 145);
+			
+							fill(233, 124, 237);
+							beginShape();
+							vertex(50, 135);
+							vertex(40, 135);
+							vertex(30, 120);
+							vertex(35, 85);
+							bezierVertex(40, 80, 45, 75, 50, 75);
+							endShape();
+			
+							fill(224, 110, 230);
+							beginShape();
+							vertex(50, 135);
+							vertex(60, 135);
+							vertex(70, 120);
+							vertex(65, 85);
+							bezierVertex(60, 80, 55, 75, 50, 75);
+							endShape();
+			
+							popMatrix();
+			
+							var bodyImg = get(0, 0, 100, 175);
+			
+							if (bodyImg) {
+								bodyImg.mask(bodyMask);
+							}
+			
+							background(255, 0);
+							image(bodyImg, 0, 0);
+						}
+					},
+					enemyMothershipWing: {
+						w: 120,
+						h: 120,
+						d: function() {
+							background(0);
+			
+							fill(255);
+			
+							noStroke();
+							beginShape();
+							vertex(110, 97);
+							vertex(85, 80);
+							bezierVertex(70, 70, 75, 55, 80, 50);
+							vertex(50, 65);
+							bezierVertex(46, 85, 63, 85, 65, 142);
+							vertex(75, 160);
+							vertex(100, 150);
+							vertex(120, 130);
+							endShape();
+			
+							beginShape();
+							vertex(60, 90);
+							vertex(50, 100);
+							vertex(20, 90);
+							vertex(15, 80);
+							vertex(17, 110);
+							bezierVertex(20, 114, 40, 124, 70, 130);
+							endShape();
+							rect(15, 60, 2, 25);
+			
+							var wingMask = get(0, 50, 120, 120);
+			
+							background(129, 146, 158);
+			
+							fill(158, 171, 181);
+							pushMatrix();
+							noStroke();
+							translate(0, -50);
+							beginShape();
+							vertex(110, 97);
+							vertex(85, 80);
+							bezierVertex(70, 70, 75, 55, 80, 50);
+							vertex(50, 65);
+							bezierVertex(46, 85, 63, 85, 65, 142);
+							vertex(75, 160);
+							vertex(100, 150);
+							vertex(120, 130);
+							endShape();
+							popMatrix();
+			
+							for (var i = 0; i < 50; i++) {
+								fill(0, 75 - i * 1.5);
+								rect(120 - i, 0, 1, 120);
+							}
+			
+							stroke(233, 124, 237);
+							strokeWeight(7);
+							noFill();
+							line(75, 110, 100, 100);
+							line(100, 100, 120, 80);
+			
+							beginShape();
+							vertex(17, 60);
+							bezierVertex(20, 64, 40, 74, 60, 78);
+							endShape();
+			
+							var wingImg = get(0, 0, 120, 120);
+			
+							if (wingImg) {
+								wingImg.mask(wingMask);
+							}
+			
+							background(255, 0);
+							image(wingImg, 0, 0);
+						}
+					},
+					menuBackground: {
+						w: 900,
+						h: 600,
+						d: function() {
+						    noStroke();
+			                strokeWeight(1);
+							var cloud = function(clr, s, r, x, y, w, h, dens) {
+								pushMatrix();
+			
+								translate(x, y);
+								rotate(r);
+			
+								fill(clr);
+								for (var i = 0; i < w * h / s / dens; i++) {
+									ellipse(random(0, w), random(0, h), s, s);
+								}
+			
+								popMatrix();
+							};
+							var star = function(clr, opac, x, y, s) {
+								fill(clr, opac);
+								ellipse(x, y, s, s);
+								fill(clr, opac / 3);
+								ellipse(x, y, s * 2, s * 2);
+								fill(clr, opac * 10);
+								ellipse(x, y, s / 4, s / 4);
+							};
+							background(43, 12, 43);
+							noStroke();
+							cloud(color(90, 106, 184, 3), 10, 0, 0, 0, 900, 900, 6);
+							cloud(color(16, 182, 207, 3), 50, 0, 0, 0, 900, 900, 20);
+							for (var i = 0; i < 1000; i++) {
+								star(255, random(5, 15), random(15, 885), random(0, 600), random(3, 5));
+							}
+							cloud(color(235, 44, 225, 3), 20, -30, 0, 0, 1100, 100, 15);
+							cloud(color(212, 93, 117, 3), 30, -40, 0, 300, 1100, 100, 10);
+							cloud(color(191, 94, 111, 3), 30, -40, 0, 550, 1100, 257, 5);
+							cloud(color(222, 152, 224, 10), 45, -40, 0, 311, 1100, 100, 26);
+							cloud(color(232, 237, 190, 3), 40, -20, 0, 305, 1100, 100, 10);
+			
+							for (var i = 0; i < 300; i++) {
+								var y = random(0, 600);
+								star(color(255, 255 - y / 5, 255 - y / 5), random(5, 15), random(15, 880), y, random(5, 15));
+							}
+						}
+					},
+					spaceBackground1: {
+						w: 900,
+						h: 600,
+						d: function() {
+						    noStroke();
+			                strokeWeight(1);
+							background(20, 0, 20);
+							var cloud = function(clr, s, r, x, y, w, h, dens) {
+								pushMatrix();
+			
+								translate(x, y);
+								rotate(r);
+			
+								fill(clr);
+								for (var i = 0; i < w * h / s / dens; i++) {
+									ellipse(random(0, w), random(0, h), s, s);
+								}
+			
+								popMatrix();
+							};
+							var star = function(clr, opac, x, y, s) {
+								fill(clr, opac);
+								ellipse(x, y, s, s);
+								fill(clr, opac / 3);
+								ellipse(x, y, s * 2, s * 2);
+								fill(clr, opac * 10);
+								ellipse(x, y, s / 4, s / 4);
+							};
+			
+							noStroke();
+							cloud(color(90, 106, 184, 3), 10, 0, 0, 0, 900, 900, 6);
+							cloud(color(16, 182, 207, 3), 50, 0, 0, 0, 900, 900, 20);
+							for (var i = 0; i < 1000; i++) {
+								star(255, random(5, 15), random(15, 885), random(0, 600), random(3, 5));
+							}
+							cloud(color(207, 16, 51, 3), 20, 30, 0, 0, 1100, 100, 15);
+							cloud(color(166, 31, 56, 3), 30, 40, 0, 100, 1100, 100, 10);
+							cloud(color(133, 39, 56, 3), 30, 40, 0, 250, 1100, 257, 5);
+							cloud(color(232, 237, 190, 3), 20, 30, 0, -111, 1100, 100, 26);
+							cloud(color(232, 237, 190, 3), 40, 10, 0, -105, 1100, 100, 10);
+			
+							for (var i = 0; i < 300; i++) {
+								var y = random(0, 600);
+								star(color(255, 255 - y / 5, 255 - y / 5), random(5, 15), random(15, 880), y, random(5, 15));
+							}
+			
+							var starBackground1 = get(0, 0, 900, 600);
+			
+							background(255);
+							for (var i = 0; i < 200; i++) {
+								fill(0, i * 1.2525);
+								rect(700 + i, 0, 1, 600);
+							}
+							var starBackgroundMask = get(0, 0, 900, 600);
+			
+							if (starBackground1) {
+								starBackground1.mask(starBackgroundMask);
+							}
+			
+							background(255, 0);
+							image(starBackground1, 0, 0);
+						}
+			
+					},
+					spaceBackground2: {
+						w: 900,
+						h: 600,
+						d: function() {
+						    noStroke();
+			                strokeWeight(1);
+							image(imgs.menuBackground, 0, 0);
+							var starBackground2 = get(0, 0, 900, 600);
+			
+							background(255);
+							for (var i = 0; i < 200; i++) {
+								fill(0, i * 1.2525);
+								rect(700 + i, 0, 1, 600);
+							}
+							var starBackgroundMask = get(0, 0, 900, 600);
+			
+							if (starBackground2) {
+								starBackground2.mask(starBackgroundMask);
+							}
+			
+							background(255, 0);
+							image(starBackground2, 0, 0);
+						},
+					},
+					starFleetTitle: {
+						w: 900,
+						h: 200,
+						d: function() {
+						    strokeCap(ROUND);
+							var starfleet = function() {
+								pushMatrix();
+								translate(-20, 0);
+								//s    
+								beginShape();
+								vertex(230, 84);
+								vertex(191, 61);
+								vertex(166, 95);
+								vertex(172, 124);
+								vertex(202, 132);
+								vertex(207, 150);
+								vertex(175, 148);
+								vertex(180, 167);
+								vertex(214, 177);
+								vertex(239, 148);
+								vertex(234, 116);
+								vertex(193, 106);
+								vertex(203, 91);
+								vertex(233, 106);
+								endShape(CLOSE);
+			
+								//t
+								beginShape();
+								vertex(226, 52);
+								vertex(229, 71);
+								vertex(252, 68);
+								vertex(264, 167);
+								vertex(285, 163);
+								vertex(274, 65);
+								vertex(295, 62);
+								vertex(294, 46);
+								endShape(CLOSE);
+			
+								//a
+								beginShape();
+								vertex(305, 159);
+								vertex(321, 43);
+								vertex(339, 41);
+								vertex(366, 154);
+								vertex(345, 156);
+								vertex(330, 81);
+								vertex(322, 157);
+								endShape(CLOSE);
+			
+								//r
+								beginShape();
+								vertex(367, 153);
+								vertex(386, 151);
+								vertex(387, 96);
+								vertex(420, 150);
+								vertex(431, 149);
+								vertex(430, 136);
+								vertex(399, 80);
+								vertex(418, 79);
+								vertex(431, 58);
+								vertex(411, 34);
+								vertex(362, 36);
+								endShape(CLOSE);
+			
+								//f
+								beginShape();
+								vertex(430, 149);
+								vertex(431, 32);
+								vertex(498, 33);
+								vertex(498, 50);
+								vertex(447, 51);
+								vertex(446, 72);
+								vertex(471, 72);
+								vertex(470, 88);
+								vertex(446, 88);
+								vertex(444, 150);
+			
+								//l
+								endShape(CLOSE);
+								beginShape();
+								vertex(498, 33);
+								vertex(495, 152);
+								vertex(553, 155);
+								vertex(553, 138);
+								vertex(510, 135);
+								vertex(516, 33);
+								endShape(CLOSE);
+			
+								//e
+								beginShape();
+								vertex(567, 36);
+								vertex(635, 46);
+								vertex(633, 65);
+								vertex(582, 58);
+								vertex(579, 89);
+								vertex(599, 91);
+								vertex(598, 113);
+								vertex(578, 111);
+								vertex(576, 142);
+								vertex(615, 146);
+								vertex(615, 163);
+								vertex(558, 155);
+								endShape(CLOSE);
+			
+								//e
+								beginShape();
+								vertex(634, 46);
+								vertex(620, 165);
+								vertex(681, 177);
+								vertex(684, 159);
+								vertex(640, 148);
+								vertex(645, 117);
+								vertex(664, 119);
+								vertex(667, 101);
+								vertex(648, 98);
+								vertex(653, 68);
+								vertex(700, 78);
+								vertex(702, 59);
+								endShape(CLOSE);
+			
+								//t
+								beginShape();
+								vertex(701, 59);
+								vertex(698, 78);
+								vertex(725, 84);
+								vertex(702, 184);
+								vertex(720, 189);
+								vertex(744, 91);
+								vertex(769, 98);
+								vertex(772, 80);
+								endShape(CLOSE);
+								popMatrix();
+							};
+			
+							background(0);
+							fill(255);
+							noStroke();
+							starfleet();
+							var mask = get(100, 0, 700, 200);
+			
+							image(imgs.spaceBackground1, 0, 0);
+			
+							for (var i = 0; i < 350; i++) {
+								fill(104, 108, 209, i / 3);
+								rect(350 - i, 0, 1, 600);
+							}
+							for (var i = 0; i < 115; i++) {
+								fill(200, 200, 255, i);
+								rect(0, 100 + i, 900, 1);
+								fill(189, 66, 66, i);
+								rect(0, 115 - i, 900, 1);
+			
+							}
+			
+							var img = get(0, 0, 700, 200);
+			
+							if (img) {
+								img.mask(mask);
+							}
+			
+							background(255, 0);
+							stroke(200, 200, 255);
+							strokeWeight(5);
+							noFill();
+							starfleet();
+							image(img, 100, 0);
+							textAlign(CENTER, CENTER);
+							fill(200, 200, 255);
+							textFont(createFont("Noto Sans Bold"), 15);
+							text("L I A M    K.   2 0 2 4", 440, 175);
+							noStroke();
+							triangle(365, 175, 365, 180, 300, 180);
+							triangle(515, 175, 515, 180, 580, 180);
+						}
+					},
+					playerBullet: {
+						w: 20,
+						h: 4,
+						d: function() {
+							background(255, 0);
+							noStroke();
+							var clr1 = color(60, 230, 221);
+							var clr2 = color(48, 142, 219);
+							for (var i = 0; i < 18; i++) {
+								fill(lerpColor(clr1, clr2, i / 18));
+								ellipse(i + 2, 3, 4, 4);
+							}
+							fill(200, 200, 255);
+							rect(1, 2, 18, 1);
+						}
+					},
+					enemyBullet: {
+						w: 20,
+						h: 4,
+						d: function() {
+							background(255, 0);
+							noStroke();
+							var clr1 = color(255, 20, 106);
+							var clr2 = color(207, 0, 152);
+							for (var i = 0; i < 18; i++) {
+								fill(lerpColor(clr1, clr2, i / 18));
+								ellipse(i + 2, 3, 4, 4);
+							}
+							fill(200, 200, 255);
+							rect(1, 2, 18, 1);
+						}
+					},
+					button: {
+						w: 450,
+						h: 75,
+						d: function() {
+						    noStroke();
+							background(0);
+							fill(255);
+							arc(225, 75, 400, 100, 181, 360);
+							noStroke();
+							for (var i = 0; i < 50; i++) {
+								fill(0, map(i, 0, 50, 220, 255));
+								rect(0, 25 + i, 450, 1);
+							}
+							filter(BLUR, 4);
+							var mask = get(0, 0, 450, 75);
+			
+							background(255, 255, 255);
+							var button = get(0, 0, 450, 75);
+			
+							if (button) {
+								button.mask(mask);
+							}
+							background(255, 0);
+							image(button, 0, 0);
+						}
+					},
+					buttonHighlight: {
+						w: 60,
+						h: 20,
+						d: function() {
+							background(0, 0, 0, 0);
+							noStroke();
+							fill(255, 100);
+							ellipse(30, 10, 30, 5);
+			
+			
+							fill(255, 10);
+							for (var i = 0; i < 20; i++) {
+								ellipse(30, 10, 30 + i * 1.7, 5 + i);
+							}
+						}
+					},
+					blastImg: {
+						w: 60,
+						h: 120,
+						d: function() {
+							background(0);
+							fill(255);
+							noStroke();
+							var blastOutline = function() {
+								beginShape();
+								vertex(0, 50);
+								bezierVertex(8, 30, -8, 20, 10, 10);
+								bezierVertex(31, 16, 13, 25, 14, 25);
+								bezierVertex(35, 30, 16, 40, 16, 40);
+								bezierVertex(35, 47, 21, 52, 12, 55);
+								bezierVertex(30, 60, 10, 70, 14, 75);
+								bezierVertex(28, 80, 15, 85, 10, 90);
+								bezierVertex(0, 80, 8, 75, 3, 65);
+								bezierVertex(5, 60, 5, 60, 0, 50);
+								endShape();
+							};
+							blastOutline();
+			
+							var blastMask = get(0, 0, 30, 100);
+			
+							background(0);
+							noStroke();
+							for (var i = 0; i < 30; i++) {
+								fill(255, i * 5);
+								rect(30 - i, 0, 1, 100);
+							}
+							noFill();
+							stroke(200);
+							strokeWeight(2);
+							blastOutline();
+							var blastImg = get(0, 0, 30, 100);
+			
+							if (blastImg) {
+								blastImg.mask(blastMask);
+							}
+							background(0);
+							image(blastImg, 20, 10);
+							blastMask = get(0, 0, 60, 120);
+			
+							background(255, 200, 255);
+							noStroke();
+							for (var i = 0; i < 100; i++) {
+								fill(212, 26, 113, random(15, 50));
+								ellipse(random(0, 50), random(0, 100), 10, 10);
+							}
+							var blastImg = get(0, 0, 60, 120);
+			
+							if (blastImg) {
+								blastImg.mask(blastMask);
+							}
+							background(255, 0);
+							fill(255, 0, 100, 5);
+							noStroke();
+							for (var i = 0; i < 25; i++) {
+								ellipse(30, 60, i * 2.4, i * 5);
+							}
+							image(blastImg, 0, 0);
+						}
+					},
+					nuke: {
+						w: 325,
+						h: 100,
+						d: function() {
+							background(0);
+							noStroke();
+							fill(255);
+							beginShape();
+							vertex(0, 50);
+							bezierVertex(0, 100, 50, 100, 100, 100);
+							vertex(200, 100);
+							bezierVertex(250, 95, 275, 75, 300, 50);
+							bezierVertex(275, 25, 250, 5, 200, 0);
+							vertex(100, 0);
+							bezierVertex(50, 0, 0, 0, 0, 50);
+							endShape();
+							var mask = get(0, 0, 300, 100);
+			
+							background(147, 161, 171);
+							fill(204, 59, 194);
+							rect(200, 0, 100, 100);
+			
+							for (var i = 0; i < 50; i++) {
+								fill(0, sin(i / 5 * 9) * 30);
+								rect(0, 50 + i, 300, 2);
+								fill(255, sin(i / 5 * 9) * 30);
+								rect(0, 50 - i, 300, 2);
+							}
+							var img = get(0, 0, 300, 100);
+			
+							if (img) {
+								img.mask(mask);
+							}
+			
+							pushMatrix();
+							translate(325, 0);
+							scale(-1, 1);
+							background(255, 0);
+							image(img, 25, 25, 300, 50);
+							fill(204, 59, 194);
+							rect(0, 48, 100, 4);
+							triangle(0, 0, 35, 35, 100, 25);
+							triangle(0, 100, 35, 65, 100, 75);
+			
+							popMatrix();
+						},
+					},
+					shopBar: {
+						w: 250,
+						h: 600,
+						d: function() {
+			
+							noStroke();
+							fill(255, 50);
+							rect(110, 0, 200, 600);
+			
+							stroke(131, 219, 207);
+							strokeWeight(3);
+							beginShape();
+							vertex(110, -10);
+							vertex(22, -10);
+							vertex(22, 20);
+							vertex(32, 30);
+							vertex(32, 55);
+							vertex(22, 65);
+							vertex(22, 120);
+							vertex(27, 125);
+							vertex(37, 125);
+							vertex(47, 135);
+							vertex(72, 135);
+							vertex(72, 550);
+							vertex(82, 560);
+							vertex(82, 570);
+							vertex(110, 600);
+							endShape();
+			
+							noStroke();
+							fill(131, 219, 207);
+							beginShape();
+							vertex(15, 0);
+							vertex(10, 0);
+							vertex(10, 125);
+							vertex(15, 130);
+							vertex(15, 136);
+							vertex(40, 136);
+							vertex(35, 129);
+							vertex(25, 129);
+							vertex(17, 121);
+							vertex(17, 65);
+							vertex(25, 55);
+							vertex(25, 30);
+							vertex(15, 20);
+							endShape();
+			
+							beginShape();
+							vertex(70, 555);
+							vertex(70, 590);
+							vertex(80, 600);
+							vertex(103, 600);
+							vertex(76, 571);
+							vertex(76, 560);
+							endShape();
+			
+							textFont(createFont("Noto Sans Bold"), 20);
+							textAlign(CENTER, CENTER);
+							text("S", 48, 35);
+							text("H", 48, 55);
+							text("O", 48, 75);
+							text("P", 48, 95);
+						}
+					},
+					healthIcon: {
+						w: 50,
+						h: 50,
+						d: function() {
+							noFill();
+							background(255, 0);
+							strokeWeight(5);
+							stroke(240, 250, 250);
+							beginShape();
+							vertex(25, 3);
+							vertex(5, 10);
+							bezierVertex(0, 20, 8, 40, 25, 45);
+							bezierVertex(42, 40, 50, 20, 45, 10);
+							vertex(25, 3);
+							endShape();
+			
+							noStroke();
+							fill(240, 250, 250);
+							beginShape();
+							for (var i = 0; i < 10; i++) {
+								var d = 6;
+								if (i % 2 === 0) {
+									d = 12;
+								}
+								vertex(25 + cos(i * 36 - 18) * d, 25 + sin(i * 36 - 18) * d);
+			
+							}
+							endShape();
+						}
+					},
+					damageIcon: {
+						w: 50,
+						h: 60,
+						d: function() {
+							strokeCap(SQUARE);
+			
+							background(255, 0);
+							noFill();
+							stroke(240, 250, 250);
+							strokeWeight(5);
+							beginShape();
+							vertex(20, 13);
+							vertex(10, 3);
+							vertex(3, 3);
+							vertex(3, 10);
+							vertex(13, 20);
+							endShape();
+			
+							beginShape();
+							vertex(13, 30);
+							vertex(40, 3);
+							vertex(47, 3);
+							vertex(47, 10);
+							vertex(20, 37);
+							endShape();
+			
+							line(5, 45, 15, 35);
+							line(45, 45, 35, 35);
+			
+							noStroke();
+							fill(240, 250, 250);
+							quad(10, 25, 24, 40, 22, 47, 3, 28);
+							quad(40, 25, 26, 40, 28, 47, 47, 28);
+							ellipse(5, 45, 10, 10);
+							ellipse(45, 45, 10, 10);
+						}
+					},
+					reloadIcon: {
+						w: 50,
+						h: 50,
+						d: function() {
+							noFill();
+							strokeWeight(5);
+							stroke(240, 250, 250);
+							ellipse(25, 25, 45, 45);
+			
+							noStroke();
+							fill(240, 250, 250);
+							triangle(28, 8, 28, 28, 15, 28);
+							triangle(22, 42, 22, 22, 35, 22);
+						}
+					},
+					upgradeCard: {
+						w: 400,
+						h: 400,
+						d: function() {
+							background(255, 0);
+							image(imgs.spaceBackground1, 0, 0, 3600, 2400);
+			
+							noStroke();
+			
+							fill(156, 255, 255, 100);
+							rect(0, 0, 400, 400);
+			
+							fill(194, 31, 194, 2);
+							for (var i = 0; i < 100; i++) {
+								ellipse(300, 400, i * 4, i * 4);
+							}
+			
+							fill(143, 225, 255, 2);
+							for (var i = 0; i < 100; i++) {
+								ellipse(100, 0, i * 4, i * 4);
+							}
+			
+							fill(31, 102, 194, 2);
+							for (var i = 0; i < 100; i++) {
+								ellipse(0, 350, i * 8, i * 4);
+							}
+							noFill();
+							stroke(255);
+			
+							var img = get(0, 0, 400, 400);
+			
+							background(0);
+			
+			
+							stroke(255);
+							strokeWeight(12);
+							fill(255, 75);
+							rect(16, 16, 375, 375, 30);
+			
+			
+			
+							var mask = get(0, 0, 400, 400);
+			
+							if (img) {
+								img.mask(mask);
+							}
+			
+							background(255, 0);
+							image(img, 0, 0);
+						}
+					},
+					upgradeBar: {
+						w: 100,
+						h: 25,
+						d: function() {
+							background(0);
+							strokeWeight(2);
+							stroke(255);
+							noFill();
+							pushMatrix();
+							translate(2, 2);
+							beginShape();
+							vertex(0, 0);
+							vertex(50, 0);
+							vertex(55, 5);
+							vertex(90, 5);
+							vertex(95, 10);
+							vertex(95, 20);
+							vertex(0, 20);
+							endShape(CLOSE);
+							line(57, 0, 90, 0);
+							line(95, 3, 90, 0);
+							popMatrix();
+			
+							var upgradeBarMask = get(0, 0, 100, 25);
+			
+							background(255, 0);
+							noStroke();
+							for (var i = 0; i < 100; i++) {
+			
+								fill(lerpColor(color(143, 225, 255), color(240, 240, 250), i / 100));
+								rect(i, 0, 1, 30);
+							}
+			
+							var upgradeBarImg = get(0, 0, 100, 25);
+			
+							if (upgradeBarImg) {
+								upgradeBarImg.mask(upgradeBarMask);
+							}
+			
+							background(255, 0);
+							image(upgradeBarImg, 0, 0);
+			
+							var upgradeBar = get(0, 0, 100, 25);
+						}
+					},
+					healthBar: {
+						w: 450,
+						h: 80,
+						d: function() {
+						    strokeCap(ROUND);
+							pushMatrix();
+							scale(1.5);
+							fill(255, 50);
+							stroke(131, 219, 207);
+							strokeWeight(3);
+							beginShape();
+							vertex(3, 0);
+							vertex(20, 20);
+							vertex(20, 30);
+							vertex(40, 50);
+							vertex(190, 50);
+							vertex(200, 45);
+							vertex(250, 45);
+							vertex(270, 30);
+							vertex(275, 30);
+							vertex(297, 0);
+							endShape();
+			
+							line(3, 8, 15, 23);
+							line(200, 50, 252, 50);
+							line(254, 50, 272, 36);
+			
+							noFill();
+							quad(30, 13, 270, 13, 250, 35, 50, 35);
+			
+							popMatrix();
+						}
+					},
+					textBar: {
+						w: 450,
+						h: 80,
+						d: function() {
+						    strokeCap(ROUND);
+							pushMatrix();
+							scale(1.5);
+							fill(255, 50);
+							stroke(131, 219, 207);
+							strokeWeight(3);
+							beginShape();
+							vertex(3, 0);
+							vertex(20, 20);
+							vertex(20, 30);
+							vertex(40, 50);
+							vertex(190, 50);
+							vertex(200, 45);
+							vertex(250, 45);
+							vertex(270, 30);
+							vertex(275, 30);
+							vertex(297, 0);
+							endShape();
+			
+							line(3, 8, 15, 23);
+							line(200, 50, 252, 50);
+							line(254, 50, 272, 36);
+			
+							popMatrix();
+						}
+					},
+					enemyHealthIcon: {
+						w: 50,
+						h: 50,
+						d: function() {
+							noFill();
+							background(255, 0);
+							strokeWeight(5);
+							stroke(195, 17, 219);
+							beginShape();
+							vertex(25, 3);
+							vertex(5, 10);
+							bezierVertex(0, 20, 8, 40, 25, 45);
+							bezierVertex(42, 40, 50, 20, 45, 10);
+							vertex(25, 3);
+							endShape();
+			
+							noStroke();
+							fill(195, 17, 219);
+							beginShape();
+							for (var i = 0; i < 10; i++) {
+								var d = 6;
+								if (i % 2 === 0) {
+									d = 12;
+								}
+								vertex(25 + cos(i * 36 - 18) * d, 25 + sin(i * 36 - 18) * d);
+			
+							}
+							endShape();
+						}
+					},
+					scrap1: {
+						w: 50,
+						h: 50,
+						d: function() {
+							var img = scrap();
+							background(255, 0);
+							image(img, 0, 0);
+						}
+					},
+					scrap2: {
+						w: 50,
+						h: 50,
+						d: function() {
+							var img = scrap();
+							background(255, 0);
+							image(img, 0, 0);
+						}
+					},
+					scrap3: {
+						w: 50,
+						h: 50,
+						d: function() {
+							var img = scrap();
+							background(255, 0);
+							image(img, 0, 0);
+						}
+					},
+					scrap4: {
+						w: 50,
+						h: 50,
+						d: function() {
+							var img = scrap();
+							background(255, 0);
+							image(img, 0, 0);
+						}
+					},
+					Instructions:{
+			            w:900,
+			            h:600,
+			            d:function(){
+			                background(0);
+			                fill(255);
+			                textAlign(CENTER,CENTER);
+			                textFont(createFont('Marcellus Bold'),125);
+			                pushMatrix();
+			                translate(450,77);
+			                scale(1.08,1.59);
+			                translate(-450,-75);
+			                text('Instructions',445,72);
+			                popMatrix();
+			                
+			                noStroke();
+			                for(var i = 0; i < 360; i += 90){
+			                    pushMatrix();
+			                    translate(633,95);
+			                    rotate(i);
+			                    beginShape();
+			                    vertex(0,0);
+			                    vertex(10,0);
+			                    bezierVertex(5,2,2,5,0,10);
+			                    endShape();
+			                    popMatrix();
+			                }
+			                
+			                
+			                var mask = get(0,0,900,200);
+			                
+			                background(255);
+			                noStroke();
+			                var c2 = color(255);
+			                var c1 = color(220,200,255);
+			                for(var i = 0; i < 200; i ++){
+			                    fill(lerpColor(c1,c2,i/200));
+			                    rect(0,i,900,1);
+			                }
+			                var img = get(0,0,900,200);
+			                
+			                background(28, 143, 189);
+			                var c2 = color(125, 5, 43);
+			                var c1 = color(117, 18, 128);
+			                for(var i = 0; i < 200; i ++){
+			                    fill(lerpColor(c1,c2,i/200));
+			                    rect(0,i,900,1);
+			                }
+			                var img2 = get(0,0,900,200);
+			                
+			                if(img && img2){
+			                    img.mask(mask);
+			                    img2.mask(mask);
+			                }
+			                
+			                background(255,0);
+			                for(var i = 0; i < 10; i ++){
+			                    image(img2,0,i+200);
+			                }
+			                image(img,0,200);  
+			            }
+			        },
+			        About:{
+			            w:900,
+			            h:600,
+			            d:function(){
+			                background(0);
+			                fill(255);
+			                textAlign(CENTER,CENTER);
+			                textFont(createFont('Marcellus Bold'),125);
+			                pushMatrix();
+			                translate(450,77);
+			                scale(1.08,1.59);
+			                translate(-450,-75);
+			                text('About',445,72);
+			                popMatrix();
+			                
+			                noStroke();
+			                for(var i = 0; i < 360; i += 90){
+			                    pushMatrix();
+			                    translate(466,95);
+			                    rotate(i);
+			                    beginShape();
+			                    vertex(0,0);
+			                    vertex(10,0);
+			                    bezierVertex(5,2,2,5,0,10);
+			                    endShape();
+			                    popMatrix();
+			                }
+			                
+			                
+			                var mask = get(0,0,900,200);
+			                
+			                background(255);
+			                noStroke();
+			                var c2 = color(255);
+			                var c1 = color(220,200,255);
+			                for(var i = 0; i < 200; i ++){
+			                    fill(lerpColor(c1,c2,i/200));
+			                    rect(0,i,900,1);
+			                }
+			                var img = get(0,0,900,200);
+			                
+			                background(28, 143, 189);
+			                var c2 = color(125, 5, 43);
+			                var c1 = color(117, 18, 128);
+			                for(var i = 0; i < 200; i ++){
+			                    fill(lerpColor(c1,c2,i/200));
+			                    rect(0,i,900,1);
+			                }
+			                var img2 = get(0,0,900,200);
+			                
+			                if(img && img2){
+			                    img.mask(mask);
+			                    img2.mask(mask);
+			                }
+			                
+			                background(255,0);
+			                for(var i = 0; i < 10; i ++){
+			                    image(img2,0,i+200);
+			                }
+			                image(img,0,200);  
+			            }
+			        },
+			        apocalypseBackdrop:{
+			            w:900,
+			            h:600,
+			            d:function(){
+			                var cloud = function(x,y,w,h,r,clr,density,opac){
+			                    pushMatrix();
+			                    translate(x,y);
+			                    rotate(r);
+			                    
+			                    strokeWeight(1);
+			                    var o = 255 - opac;
+			                    
+			                    for(var i = 0; i < w; i += 4){
+			                        for(var j = 0; j < h; j += 4){
+			                            var n = noise(i/density,j/density);
+			                            var m = map(n,0,1,0,255 - map(j,0,h,0,255));
+			                            
+			                            strokeWeight(5);
+			                            stroke(clr,m - o);
+			                            point(i,j);
+			                        }
+			                    }
+			                    
+			                    popMatrix();
+			                };
+			                
+			                background(143, 23, 65);
+			                
+			                cloud(0,0,900,400,0,color(222, 90, 13),60,255);
+			                cloud(0,0,900,200,0,color(94, 7, 15),100,255);
+			                cloud(900,600,900,200,180,color(240, 141, 192),100,255);
+			                
+			                
+			                noFill();
+			                strokeWeight(1);
+			                for(var i = 800; i < 1400; i ++){
+			                    stroke(100,0,0,map(i,800,1400,0,100));
+			                    ellipse(450,350,i,i/1.5);
+			                }
+			                
+			                filter(BLUR,2);
+			            }
+			        },
+			        redLaurel:{
+			            w:900,
+			            h:600,
+			            d:function(){
+			                background(255,0);
+			                
+			                pushMatrix();
+			                translate(450,300);
+			                scale(0.65);
+			                translate(-450,-300);
+			                laurel(color(255,0),color(207, 20, 45,50),15);
+			                laurel(color(255,0),color(207, 20, 45,50),10);
+			                laurel(color(255,0),color(207, 20, 45,50),5);
+			                laurel(color(255,0),color(255,200,255,100),2);
+			                popMatrix();
+			            },
+			        },
+			        laurel:{
+			            w:900,
+			            h:600,
+			            d:function(){
+			                
+			                background(255,0);
+			                
+			                laurel(color(255,0),color(28, 143, 189,50),15);
+			                laurel(color(255,0),color(28, 143, 189,50),10);
+			                laurel(color(255,0),color(28, 143, 189,50),5);
+			                laurel(color(255,0),color(200,200,255,100),2);
+			            },
+			        },
+			        howToBossBattle:{
+			            w:900,
+			            h:600,
+			            d:function(){
+			                strokeCap(ROUND);
+			                pushMatrix();
+			                translate(13,0);
+			                strokeWeight(1);
+			                stroke(255,100);
+			                fill(255,50);
+			                rect(150,225,175,175,10);
+			                image(imgs.button,350,275,175,75);
+			                rect(350,225,175,175,10);
+			                image(imgs.button,550,275,175,75);
+			                rect(550,225,175,175,10);
+			                image(imgs.button,150,275,175,75);
+			                
+			                var Key = function(letter,x,y){
+			                    pushMatrix();
+			                    translate(x,y);
+			                    noFill();
+			                    stroke(255,200);
+			                    strokeWeight(2);
+			                    rect(0,0,40,40,5);
+			                    rect(0,0,40,47,5);
+			                    textFont(createFont('Noto Sans Bold',30));
+			                    fill(255,200);
+			                    text(letter,20,20);
+			                    popMatrix();
+			                };
+			                Key('a',167,295);
+			                Key('s',217,295);
+			                Key('d',267,295);
+			                Key('w',217,240);
+			                
+			                pushMatrix();
+			                translate(15,20);
+			                noFill();
+			                strokeWeight(4);
+			                beginShape();
+			                vertex(410,250);
+			                vertex(410,300);
+			                vertex(425,295);
+			                vertex(431,310);
+			                vertex(437,308);
+			                vertex(431,293);
+			                vertex(446,288);
+			                endShape(CLOSE);
+			                
+			                strokeWeight(2);
+			                for(var i = 135; i < 390; i += 45){
+			                    var ct = cos(i);
+			                    var st = sin(i);
+			                    
+			                    line(410+ct*10,250+st*10,410+ct*20,250+st*20);
+			                }
+			                popMatrix();
+			                
+			                strokeWeight(3);
+			                
+			                
+			                beginShape();
+			                for(var i = 0; i < 360; i += random(36, 45)){
+			                    var d = random(20, 40);
+			                    vertex(cos(i) * d + 637, sin(i) * d + 300);
+			                }
+			                endShape(CLOSE);
+			                
+			                textFont(createFont('Noto Sans'),15);
+			                fill(255);
+			                text('WASD or arrow keys\nto move your ship.',237,370);
+			                text('Press the mouse to\nshoot enemies.',437,370);
+			                text('Press the mouse to\nshoot enemies.',437,370);
+			                text('Collect scraps to \npurchase upgrades.',637,370);   
+			                popMatrix();
+			            }
+			        },
+			        THF:{
+			            w:600,
+			            h:600,
+			            d:function(){
+			                function THF (x, y, s, r) {
+			                    pushMatrix();
+			                        translate(x, y);
+			                        scale(s);
+			                        rotate(r);
+			                        
+			                        textAlign(CENTER, CENTER);
+			                        textFont(createFont("arial black"), 19);
+			                        
+			                        // The text's outline
+			                        for (var i = 0; i < 360; i++) {
+			                            fill(0);
+			                            text("The Hotlist Forge", sin(i * 2) * 2, -66 + cos(i * 2) * 2);
+			                        }
+			                        
+			                        // The text
+			                        fill(240, 240, 250);
+			                        text("The Hotlist Forge", 0, -66);
+			                        
+			                        fill(240, 240, 250);
+			                        stroke(0);
+			                        strokeWeight(4);
+			                        
+			                        // H
+			                        beginShape();
+			                        vertex(-10, 10);
+			                        vertex(-10, -30);
+			                        vertex(-25, -30);
+			                        vertex(-25, 65);
+			                        vertex(-10, 75);
+			                        vertex(-10, 25);
+			                        vertex(10, 25);
+			                        vertex(10, 75);
+			                        vertex(25, 65);
+			                        vertex(25, -30);
+			                        vertex(10, -30);
+			                        vertex(10, 10);
+			                        endShape(CLOSE);
+			                        
+			                        // T F
+			                        beginShape();
+			                        vertex(-30, -35);
+			                        vertex(-30, 62);
+			                        vertex(-45, 50);
+			                        vertex(-45, -35);
+			                        vertex(-80, -35);
+			                        vertex(-90, -50);
+			                        vertex(90, -50);
+			                        vertex(80, -35);
+			                        vertex(45, -35);
+			                        vertex(45, -15);
+			                        vertex(70, -15);
+			                        vertex(60, 0);
+			                        vertex(45, 0);
+			                        vertex(45, 50);
+			                        vertex(30, 62);
+			                        vertex(30, -35);
+			                        endShape(CLOSE);
+			                        
+			                    popMatrix();
+			                }
+			                
+			                
+			                    background(255, 0);
+			                    
+			                    THF(300, 330, 2.5, 0);
+			            }
+			        },
+			        LKLogo:{
+			            w:400,
+			            h:400,
+			            d:function(){
+			                //{
+			                noStroke();
+			                background(240,240,250);
+			                var LKimg = get(0, 0, 400, 400);
+			                
+			                //{
+			                
+			                // get the image
+			                background(0);
+			                fill(255);
+			                rect(105,100,30,10);
+			                rect(112,100,15,60);
+			                rect(105,150,55,10);
+			                quad(160,145,160,150,145,150,145,130);
+			                stroke(0);
+			                fill(255);
+			                strokeWeight(1);
+			                quad(144,124,160,124,188,151,173,151);
+			                quad(154,125,164,130,188,109,173,109);
+			                stroke(255,0);
+			                rect(153,120,12,10);
+			                noStroke();
+			                rect(165,150,30,10);
+			                rect(165,100,30,10);
+			                rect(145,100,15,25);
+			                
+			                var masking = get(0, 0, 400, 400);
+			                //} mask
+			                //}//LK
+			
+			                background(0);
+			                if(LKimg){
+			                LKimg.mask(masking);
+			                }
+			                //}//draw and mask the logo
+			                
+			                background(255,0);
+			                pushMatrix();
+			                translate(200,200);
+			                scale(5);
+			                translate(-202,-200);
+			                image(LKimg,90,105,300,300);
+			                
+			                popMatrix();
+			            }
+			        },
+			        LKImg:{
+			            w:270,
+			            h:180,
+			            d:function(){
+			                background(0);
+			                noStroke();
+			                pushMatrix();
+			                translate(300,300);
+			                scale(3);
+			                translate(-300,-300);
+			                translate(150, 170);
+			                
+			                
+			                background(0);
+			                fill(255);
+			                rect(105,100,30,10);
+			                rect(112,100,15,60);
+			                rect(105,150,55,10);
+			                quad(160,145,160,150,145,150,145,130);
+			                stroke(0);
+			                fill(255);
+			                strokeWeight(1);
+			                quad(144,124,160,124,188,151,173,151);
+			                quad(154,125,164,130,188,109,173,109);
+			                stroke(255,0);
+			                rect(153,120,12,10);
+			                noStroke();
+			                rect(165,150,30,10);
+			                rect(165,100,30,10);
+			                rect(145,100,15,25);
+			                
+			                popMatrix();
+			                
+			                var mask = get(165, 210, 270, 180);
+			                
+			                background(255,0);
+			                var c1 = color(240,240,250);
+			                var c2 = color(230,240,240);
+			                for(var i = 0; i < 180; i ++){
+			                    fill(lerpColor(c1, c2, i/ 180));
+			                    rect(0,i, 270, 1);
+			                }
+			            
+			                fill(0, 240, 240, 10);
+			                for(var i = 0; i < 50; i ++){
+			                    var r = random(20, 50);
+			                    ellipse(random(0,270), random(0, 270), r, r);
+			                }
+			                var LKImg = get(0,0,270, 180);
+			                
+			                if(LKImg){
+			                    LKImg.mask(mask);
+			                }
+			                background(255,0);
+			                image(LKImg,0,0);
+			            }
+			        },
+			        bossBattleThumbnail:{
+			            w:600,
+			            h:600,
+			            d:function(){
+			                image(imgs.menuBackground,0,0);
+			                
+			                pushMatrix();
+			                translate(300,300);
+			                rotate(45);
+			                translate(-300,-400);
+			                pushMatrix();
+			                translate(300, 0);
+			                scale(-1, 1);
+			                
+			                translate(-300,0);
+			                image(imgs.fighterWing, 325, 375 ,200, 180);
+			                popMatrix();
+			                image(imgs.fighterWing, 325, 375 ,200, 180);
+			                image(imgs.fighterBody, 200, 100, 200, 430);
+			                popMatrix();
+			                
+			            }
+			        },
+			        Credits:{
+			            w:900,
+			            h:600,
+			            d:function(){
+			                background(0);
+			                fill(255);
+			                textAlign(CENTER,CENTER);
+			                textFont(createFont('Marcellus Bold'),125);
+			                pushMatrix();
+			                translate(450,77);
+			                scale(0.85,1.59);
+			                translate(-450,-75);
+			                text('End Credits',445,72);
+			                popMatrix();
+			                
+			                
+			                var mask = get(0,0,900,200);
+			                
+			                background(255);
+			                noStroke();
+			                var c2 = color(255);
+			                var c1 = color(220,200,255);
+			                for(var i = 0; i < 200; i ++){
+			                    fill(lerpColor(c1,c2,i/200));
+			                    rect(0,i,900,1);
+			                }
+			                var img = get(0,0,900,200);
+			                
+			                background(28, 143, 189);
+			                var c2 = color(125, 5, 43);
+			                var c1 = color(117, 18, 128);
+			                for(var i = 0; i < 200; i ++){
+			                    fill(lerpColor(c1,c2,i/200));
+			                    rect(0,i,900,1);
+			                }
+			                var img2 = get(0,0,900,200);
+			                
+			                if(img && img2){
+			                    img.mask(mask);
+			                    img2.mask(mask);
+			                }
+			                
+			                background(255,0);
+			                for(var i = 0; i < 10; i ++){
+			                    image(img2,0,i+200);
+			                }
+			                image(img,0,200);  
+			            }
+			        },
+			        vingette:{
+			            w:900,
+			            h:600,
+			            d:function(){
+			                background(255,0);
+			                noFill();
+			                strokeWeight(1);
+			                for(var i = 800; i < 1400; i ++){
+			                    stroke(0,map(i,800,1400,0,100));
+			                    ellipse(450,300,i/1.2,i/1.5);
+			                }
+			                filter(BLUR,2);
+			            }
+			        },
+				});
+			})();
+			
+			var new_ = (function() {
+				/*
+				    Replace the new function because KAs new function sucks
+				    @author KWC
+				    @example of usage
+				    
+				    new Object(param1, param2)
+				    vs
+				    new_.call(Object, param1, param2)
+				    
+				*/
+				var obj = Object.create(this.prototype);
+				this.apply(obj, arguments);
+				return obj;
+			});
+			
+			var Trans = (function() {
+				/*
+				    Transition functions, basic fade in and out
+				    @constructor
+				*/
+				var _Trans = function() {
+					//Is it running?
+					this.running = false;
+			
+					//Scene to switch to
+					this.to = null;
+			
+					//Misc function run on scene change.
+					this.onChange = function() {};
+			
+					//Variable to control the transition
+					this.opac = 0;
+					this.state = 1;
+				};
+			
+				/*
+				    Start the transition
+				    @params [string] scene - which scene to switch to
+				    @params [function] onChange - a misc. function to run on switch
+				*/
+				_Trans.prototype.start = function(to, onChange) {
+					if (!this.running) {
+						this.to = to;
+						this.running = true;
+						this.onChange = onChange || function() {};
+					}
+				};
+			
+				/*
+				    End the transition
+				    Reset all variable etc.
+				*/
+				_Trans.prototype.end = function() {
+					this.running = false;
+					this.opac = 0;
+					this.state = 1;
+					this.scl = 1;
+				};
+			
+				/* Run on scene change */
+				_Trans.prototype.change = function() {
+					this.onChange();
+					scene = this.to;
+				};
+			
+				/*
+				    Put everything together
+				    Render the scene change
+				*/
+				_Trans.prototype.run = function() {
+					if (this.running) {
+						switch (this.state) {
+							//Fade out to black
+							case 1:
+								this.opac = lerp(this.opac, 256, 0.1);
+								if (this.opac >= 255) {
+									this.state = 2;
+									this.change();
+								}
+								break;
+			
+								//Fade back in
+							case 2:
+								this.opac = lerp(this.opac, -1, 0.1);
+			
+								if (this.opac < 0) {
+									this.end();
+								}
+								break;
+						}
+					}
+			
+					//Draw the transition
+					fill(0, this.opac);
+					rect(0, 0, 900, 600);
+				};
+			
+				//Create a new Transition
+				return new_.call(_Trans);
+			})();
+			
+			var LKLogo = (function(){
+			    
+			    var _LKLogo = {
+			        scale1: 0,
+			        scale2: 0,
+			        scale3: 0,
+			        scale4: 0,
+			        scale5: 0,
+			        scale6: 0,
+			        color1: color(42, 229, 235),
+			        color2: color(53, 183, 222),
+			        logoX: 0,
+			        logoSpeed:0,
+			        state:1,
+			    };
+			    
+			    _LKLogo.run = function(){
+			        try{
+			        pushMatrix();
+			        translate(width/2 - 300, height/2 - 300);
+			        
+			        pushMatrix();
+			        translate(300, 300);
+			        scale(_LKLogo.scale1);
+			        translate(-300, -300);
+			        
+			        noStroke();
+			        fill(_LKLogo.color1);
+			        ellipse(300, 300, 1200, 1200);
+			        popMatrix();
+			        
+			        pushMatrix();
+			        translate(300, 300);
+			        scale(_LKLogo.scale2);
+			        translate(-300, -300);
+			        
+			        noStroke();
+			        fill(lerpColor(_LKLogo.color1, _LKLogo.color2, 0.2));
+			        ellipse(300, 300, 800, 800);
+			        popMatrix();
+			        
+			       
+			        
+			        pushMatrix();
+			        translate(300, 300);
+			        scale(_LKLogo.scale3);
+			        translate(-300, -300);
+			        noStroke();
+			        fill(lerpColor(_LKLogo.color1, _LKLogo.color2, 0.4));
+			        beginShape();
+			        vertex(194,553);
+			        vertex(440,551);
+			        vertex(558,495);
+			        vertex(596,395);
+			        vertex(592,186);
+			        vertex(533,67);
+			        vertex(368,27);
+			        vertex(144,31);
+			        vertex(20,127);
+			        vertex(2,342);
+			        vertex(66,522);
+			        endShape(CLOSE);
+			        popMatrix();
+			        
+			        pushMatrix();
+			        translate(300, 300);
+			        scale(_LKLogo.scale4);
+			        translate(-300, -300);
+			        fill(lerpColor(_LKLogo.color1, _LKLogo.color2, 0.6));
+			        beginShape();
+			        vertex(142,109);
+			        vertex(79,165);
+			        vertex(56,268);
+			        vertex(67,407);
+			        vertex(130,489);
+			        vertex(274,503);
+			        vertex(449,488);
+			        vertex(544,427);
+			        vertex(553,307);
+			        vertex(513,165);
+			        vertex(415,121);
+			        vertex(243,105);
+			        endShape(CLOSE);
+			        popMatrix();
+			        
+			        pushMatrix();
+			        translate(300, 300);
+			        scale(_LKLogo.scale5);
+			        translate(-300, -300);
+			        fill(lerpColor(_LKLogo.color1, _LKLogo.color2, 0.8));
+			        beginShape();
+			        vertex(130, 200);
+			        vertex(160, 170);
+			        vertex(440, 170);
+			        vertex(470, 200);
+			        vertex(470, 270);
+			        vertex(430, 270);
+			        vertex(400, 300);
+			        vertex(430, 330);
+			        vertex(470, 330);
+			        vertex(470, 400);
+			        vertex(440, 430);
+			        vertex(160, 430);
+			        vertex(130, 400);
+			        vertex(130, 330);
+			        vertex(150, 330);
+			        vertex(150, 270);
+			        vertex(130, 270);
+			        endShape(CLOSE);
+			        popMatrix();
+			        
+			        if(_LKLogo.state === 3){
+			            textAlign(CENTER, CENTER);
+			            fill(255);
+			            textFont(createFont("Marcellus Bold"), 50);
+			            text("Liam K. Presents", 300, 300);
+			            
+			            fill(lerpColor(_LKLogo.color1, _LKLogo.color2, 0.8));
+			            rect(_LKLogo.logoX - 50, 210, 400, 180);
+			        }
+			        
+			        pushMatrix();
+			        translate(300, 300);
+			        scale(_LKLogo.scale6);
+			        translate(-300 + _LKLogo.logoX, -300);
+			        image(imgs.LKImg, 165, 210);
+			        popMatrix();
+			        
+			        
+			        popMatrix();
+			        
+			        if(_LKLogo.state === 1){
+			            _LKLogo.scale1 = lerp(_LKLogo.scale1, 1, 0.1);
+			            if(_LKLogo.scale1 > 0.95){
+			                _LKLogo.scale2 = lerp(_LKLogo.scale2, 1, 0.1);
+			            }
+			            if(_LKLogo.scale2 > 0.95){
+			                _LKLogo.scale3 = lerp(_LKLogo.scale3, 1, 0.1);
+			            }
+			            if(_LKLogo.scale3 > 0.95){
+			                _LKLogo.scale4 = lerp(_LKLogo.scale4, 1, 0.1);
+			            }
+			            if(_LKLogo.scale4 > 0.95){
+			                _LKLogo.scale5 = lerp(_LKLogo.scale5, 1, 0.1);
+			            }
+			            if(_LKLogo.scale5 > 0.95){
+			                _LKLogo.scale6 = lerp(_LKLogo.scale6, 1, 0.1);
+			            }
+			            if(_LKLogo.scale6 > 0.99){
+			                _LKLogo.state = 2;
+			            }
+			        }
+			        else if(_LKLogo.state === 2){
+			            _LKLogo.scale1 = lerp(_LKLogo.scale1, 3, 0.05);
+			            _LKLogo.scale2 = lerp(_LKLogo.scale2, 3, 0.05);
+			            _LKLogo.scale3 = lerp(_LKLogo.scale3, 3, 0.05);
+			            _LKLogo.scale4 = lerp(_LKLogo.scale4, 3, 0.05);
+			            _LKLogo.scale5 = lerp(_LKLogo.scale5, 5, 0.05);
+			            
+			            _LKLogo.logoX = lerp(_LKLogo.logoX, 150, 0.1);
+			            
+			            if(_LKLogo.logoX > 149){
+			                _LKLogo.state = 3;
+			            }
+			        }
+			        else if(_LKLogo.state === 3){
+			            _LKLogo.scale1 = lerp(_LKLogo.scale1, 3, 0.05);
+			            _LKLogo.scale2 = lerp(_LKLogo.scale2, 3, 0.05);
+			            _LKLogo.scale3 = lerp(_LKLogo.scale3, 3, 0.05);
+			            _LKLogo.scale4 = lerp(_LKLogo.scale4, 3, 0.05);
+			            _LKLogo.scale5 = lerp(_LKLogo.scale5, 5, 0.05);
+			            _LKLogo.logoX -= _LKLogo.logoSpeed;
+			 
+			            _LKLogo.logoSpeed += 0.3;
+			            
+			            if(_LKLogo.logoX < -1800){
+			                Trans.start("menu");
+			            }
+			            
+			        }
+			        }
+			        catch(e){
+			            println(e);
+			        }
+			        
+			    };
+			        
+			    return(_LKLogo);    
+			})();
+			
+			var Buttons = (function() {
+				Math.mouseRect = function() {
+			
+				};
+				//Mostly created before this project. 
+			
+				/*
+				    Buttons for menus and such. Click on them to switch scenes.
+				    @constructor
+				    @params {object} config
+				    @property {number} config.x - top left x position in pixels
+				    @property {number} config.y - top left y position in pixels
+				    @property {string} config.txt - Text displayed on the button
+				    @property {string} config.to - Scene to switch to
+				    @property {function} config.onClick - Ran on change of page.
+				*/
+				var _Button = function(config) {
+					//X and y
+					this.x = config.x;
+					this.y = config.y;
+			
+					this.w = config.w || 450;
+			
+					//Variables for hover
+					this.opac = 0;
+					this.txtY = 1;
+			
+					//text to display
+					this.txt = config.txt;
+					this.to = config.to;
+			
+					//Anything special to do if clicked
+					this.onClick = config.onClick || function() {};
+			
+				};
+			
+				//Render the button
+				_Button.prototype.display = function() {
+					pushMatrix();
+					translate(this.x, this.y);
+			
+					//The bright highlight at the top
+					imageMode(CENTER);
+					pushMatrix();
+					scale(7.5 * this.w / 450, max((~~this.opac) / 75, 0.01));
+					image(imgs.buttonHighlight, 30, 0);
+					popMatrix();
+					imageMode(CORNER);
+			
+					//Draw the button
+					noStroke();
+					fill(255, 40);
+					rect(0, 0, this.w, 50, 10);
+					image(imgs.button, 4, -this.txtY, this.w, 50);
+			
+					//Make whiter hover effect
+					stroke(255, 75 + this.opac * 2);
+					strokeWeight(1);
+					fill(255, this.opac);
+					rect(0, 0, this.w, 50, 10);
+					fill(255, 200 + this.opac);
+			
+					//Text
+					textFont(createFont('Noto Sans Bold'), 25);
+					text(this.txt, this.w / 2, 25 - this.txtY);
+					popMatrix();
+				};
+			
+				/*
+				Check for collision and clicks
+				Do hover effects
+				*/
+				_Button.prototype.update = function() {
+					//Check for collision
+					if (Math.mouseRect(this.x, this.y, this.w, 50)) {
+			
+						//Hover Effects
+						cursor('pointer');
+						this.opac = lerp(this.opac, 50, 0.1);
+						this.txtY = lerp(this.txtY, -3, 0.1);
+			
+						//Check for click
+						if (click && !Trans.running) {
+							Trans.start(this.to, this.onClick);
+						}
+					} else {
+			
+						//Unhover the effects
+						this.opac = lerp(this.opac, 0, 0.1);
+						this.txtY = lerp(this.txtY, 1, 0.1);
+					}
+			
+				};
+			
+				//Run .display and .update together
+				_Button.prototype.run = function() {
+					this.update();
+					this.display();
+				};
+			
+				/*
+				    Create an object of buttons for easy rendering
+				    @returns {object} - in the following format
+				    
+				    "key": new_.call(_Button,{
+				        x:x,
+				        y:y,
+				        txt:"text",
+				        to:"sceneName"
+				    }),
+				    
+				    In the scene, render a button like this. 
+				    `Buttons.key.run();
+				*/
+				return ({
+					'play': new_.call(_Button, {
+						x: 225,
+						y: 300,
+						txt: "B E G I N",
+						to: "howBossBattle",
+					}),
+					'how': new_.call(_Button, {
+						x: 225,
+						y: 400,
+						txt: "H O W",
+						to: "how",
+					}),
+					'about': new_.call(_Button, {
+						x: 225,
+						y: 500,
+						txt: "A B O U T",
+						to: "about",
+					}),
+					'menu':new_.call(_Button,{
+			            x:225,
+			            y:500,
+			            txt:'Menu',
+			            to:'menu',
+			        }),
+			        'continue':new_.call(_Button,{
+			            x:225,
+			            y:500,
+			            txt:'C O N T I N U E',
+			            to:'play',
+			        }),
+			        'replay':new_.call(_Button,{
+			            x:325,
+			            y:325,
+			            w:250,
+			            txt:'R E P L A Y',
+			            to:'play',
+			        }),
+			        'next':new_.call(_Button,{
+			            x:325,
+			            y:325,
+			            w:250,
+			            txt:'N E X T',
+			            to:'win',
+			        }),
+				});
+			})();
+			
+			var ParticleSystem = (function() {
+			
+				/* 
+				    A leaf function 
+				    @function
+				    @params {number} x - x value,
+				    @params {number} y - y position
+				    @params {number} s - scale
+				    @params {number} r - rotation
+				*/
+				function leaf(x, y, s, r) {
+					pushMatrix();
+					translate(x, y);
+					scale(s || random(0.2, 0.25));
+			
+					beginShape();
+					vertex(0, 1);
+					bezierVertex(15, 1, 27, 5, 30, 31);
+					bezierVertex(5, 27, -1, 22, 0, 1);
+					endShape();
+			
+					popMatrix();
+				}
+			
+				/*
+				    Create a basic particle function
+				    @constructor
+				    @params {object} config - configuration
+				    @property {number} config.x - x position in pixels
+				    @property {number} config.y - y poisition in pixels
+				    @property {number} config.s - size (width and height) of particle
+				    @property {number} config.clr - color(r,g,b)
+				    @property {number} config.xv - x velocity in pixels for frame
+				    @property {number} config.yb - y velocity in pixels per frame
+				    @property {number} config.rotateSpeed - in degrees per frame
+				    @property {number} config.fadeSpeed - how quickly it fades away
+				    @property {number} config.fade - starting opacity
+				    @property {string} config.shape - "rect", "circle", "leaf", or "ellipse"
+				    @property {boolean} config.grav - should gravity impact the particle
+				*/
+				var _Particle = function(config) {
+			
+					//properties mostly defined above ^^^
+					this.x = config.x;
+					this.y = config.y;
+			
+					this.s = config.s;
+					this.shrinkSpeed = config.shrinkSpeed || 0;
+			
+					this.clr = config.clr;
+			
+					this.xv = config.xv;
+					this.yv = config.yv;
+			
+					this.r = random(0, 360);
+					this.rotateSpeed = config.rotateSpeed;
+			
+			
+					this.fadeSpeed = config.fadeSpeed || 5;
+					this.fade = config.fade || 255;
+			
+					this.splicing = false;
+			
+					this.shape = config.shape || 'rect';
+			
+					this.grav = config.grav || false;
+				};
+			
+				/* Render the particle*/
+				_Particle.prototype.display = function() {
+					noStroke();
+			
+					pushMatrix();
+			
+					//transformations
+					translate(this.x, this.y);
+					rotate(this.r);
+			
+					//color
+					fill(this.clr, this.fade);
+			
+					//pretty intuitive. Draw the correct shape
+					switch (this.shape) {
+						case 'rect':
+						case 'square':
+							rectMode(CENTER);
+							rect(0, 0, this.s, this.s);
+							rectMode(CORNER);
+							break;
+						case 'circle':
+						case 'ellipse':
+							ellipse(0, 0, this.s, this.s);
+							break;
+						case 'leaf':
+							leaf(0, 0, this.s / 30, 0);
+							break;
+					}
+					popMatrix();
+			
+			
+				};
+			
+				/* Update the x and y positions, rotation*/
+				_Particle.prototype.move = function() {
+			
+					//update x and y
+					this.x += this.xv;
+					this.y += this.yv;
+			
+					//update rotation
+					this.r += this.rotateSpeed;
+			
+					//gravity logic
+					if (this.grav) {
+						this.yv += 0.1;
+					}
+			
+					//fade out the particle
+					this.fade -= this.fadeSpeed;
+					this.s -= this.shrinkSpeed;
+					//this.speed -= 0.05;
+				};
+			
+				var _ParticleSystem = [];
+				_ParticleSystem.add = function(config) {
+					this.push(new_.call(_Particle, config));
+				};
+				_ParticleSystem.run = function() {
+					for (var i = 0; i < this.length; i++) {
+						this[i].move();
+						this[i].display();
+					}
+					for (var i = 0; i < this.length; i++) {
+						if (this[i].fade < 0) {
+							this.splice(i, 1);
+						}
+					}
+				};
+				return _ParticleSystem;
+			})();
+			
+			var BossBattle = (function() {
+			
+				var Player;
+			
+				var _BossBattle = {
+					backgrounds: [{
+							x: 0,
+							img: "spaceBackground1"
+						},
+						{
+							x: 700,
+							img: "spaceBackground2"
+						},
+						{
+							x: 1400,
+							img: "spaceBackground1"
+						},
+						{
+							x: 2100,
+							img: "spaceBackground2"
+						},
+					],
+			
+					enemies: [],
+					paused: false,
+					time: 0,
+					opacity:0,
+			
+					cam: {
+						x: 0,
+						y: 0,
+					}
+				};
+			
+				var BulletSystem = (function() {
+					var _Bullet = function(config) {
+						this.x = config.x;
+						this.y = config.y;
+			
+						this.w = config.w || 2;
+						this.h = config.h || 2;
+			
+						this.r = config.r;
+						this.speed = config.speed;
+						this.xv = cos(this.r) * this.speed;
+						this.yv = sin(this.r) * this.speed;
+			
+						this.damage = config.damage;
+						this.img = config.img;
+			
+						this.splicing = false;
+					};
+					_Bullet.prototype.display = function() {
+						pushMatrix();
+						translate(this.x + this.w / 2, this.y + this.h / 2);
+						rotate(this.r);
+						translate(-this.w / 2, -this.h / 2);
+			
+						image(imgs[this.img], 0, 0, this.w, this.h);
+						popMatrix();
+					};
+					_Bullet.prototype.checkColl = function() {
+						if (this.img === "enemyBullet") {
+							if (Math.polyPoint(Player.getCollisionBox(), this.x, this.y + this.h / 2)) {
+								this.splicing = true;
+			
+								for (var i = 0; i < 5; i++) {
+									ParticleSystem.add({
+										x: this.x,
+										y: this.y,
+										s: random(5, 10),
+										clr: color(random(150, 200), 52, 196, 150),
+										xv: random(-1, 1),
+										yv: random(-1, 1),
+										fadeSpeed: random(10, 20),
+										shrinkSpeed: random(0.2, 0.35),
+										shape: "circle"
+									});
+								}
+								Player.health -= this.damage;
+							}
+						} else if (this.img === "nuke") {
+							if (Math.polyPoint(Player.getCollisionBox(), this.x, this.y + this.h / 2)) {
+								this.splicing = true;
+								for (var i = 0; i < 100; i++) {
+			
+									ParticleSystem.add({
+										x: this.x,
+										y: this.y,
+										s: random(5, 10),
+										clr: color(220, 114 + random(-30, 30), 20),
+										xv: random(-2, 2),
+										yv: random(-2, 2),
+										fadeSpeed: random(10, 20),
+										shrinkSpeed: random(0.2, 0.35),
+									});
+								}
+								Player.health -= this.damage;
+							}
+			
+						} else if (this.img === "playerBullet") {
+							for (var i = 0; i < _BossBattle.enemies.length; i++) {
+								if (Math.polyPoint(_BossBattle.enemies[i].getCollisionBox(), this.x + this.w, this.y + this.h / 2) && this.x < 900) {
+									this.splicing = true;
+			
+									for (var j = 0; j < 5; j++) {
+			
+										ParticleSystem.add({
+											x: this.x,
+											y: this.y,
+											s: random(5, 10),
+											clr: color(42, 133 + random(0, 40), 212, 150),
+											xv: random(-1, 1),
+											yv: random(-1, 1),
+											fadeSpeed: random(10, 20),
+											shrinkSpeed: random(0.2, 0.35),
+											shape: "circle"
+										});
+									}
+									_BossBattle.enemies[i].health -= this.damage;
+								}
+							}
+						}
+					};
+					_Bullet.prototype.update = function() {
+			
+						if (!_BossBattle.paused) {
+							this.x += this.xv;
+							this.y += this.yv;
+						}
+					};
+					_Bullet.prototype.run = function() {
+			
+						this.update();
+						this.checkColl();
+						this.display();
+			
+					};
+			
+					var _Nuke = function(config) {
+						_Bullet.call(this, config);
+			
+						this.target = config.target;
+					};
+					_Nuke.prototype = Object.create(_Bullet.prototype);
+					_Nuke.prototype.display = function() {
+						pushMatrix();
+						translate(this.x + this.w / 2, this.y + this.h / 2);
+						rotate(this.r + 180);
+						translate(-this.w / 2, -this.h / 2);
+			
+						image(imgs[this.img], 0, 0, this.w, this.h);
+						popMatrix();
+					};
+					_Nuke.prototype.update = function() {
+			
+						if (!_BossBattle.paused) {
+							this.x += this.xv;
+							this.y += this.yv;
+							if (this.target.y + 20 < this.y) {
+								this.y -= 1.5;
+							} else if (this.target.y - 20 > this.y) {
+								this.y += 1.5;
+							}
+						}
+					};
+			
+					var _BulletSystem = [];
+					_BulletSystem.add = function(config, type) {
+			
+						if (type === "Nuke") {
+							this.push(new_.call(_Nuke, config));
+						} else {
+							this.push(new_.call(_Bullet, config));
+						}
+					};
+					_BulletSystem.run = function() {
+						for (var i = this.length - 1; i >= 0; i--) {
+							this[i].run();
+							if (this[i].splicing) {
+								this.splice(i, 1);
+							}
+						}
+						for (var i = 0; i < this.length; i++) {
+							if (this[i].x < -50 || this[i].x > 950) {
+								this[i].splicing = true;
+			
+							}
+						}
+					};
+					return _BulletSystem;
+				})();
+			
+				var SpaceFighter = (function() {
+			
+					var _SpaceFighter = function(config) {
+						this.x = config.x || 100;
+						this.y = config.y || 100;
+			
+						this.bodyImg = config.bodyImg || "fighterBody";
+						this.wingImg = config.wingImg || "fighterWing";
+			
+						this.w = 100;
+						this.h = 200;
+			
+						this.acc = 0.15;
+						this.xv = 0;
+						this.yv = 0;
+						this.maxVel = 4;
+			
+						this.r = config.r || 90;
+						this.initR = config.r || 90;
+						this.wingRot = 0;
+						this.wingRotRange = config.wingRotRange || {
+							neutral: -5,
+							acc: 10,
+							deacc: -15
+						};
+						this.lerpSpeed = config.lerpSpeed || 0.05;
+			
+						this.fireTime = 0;
+			
+						this.moving = {
+							left: false,
+							right: false,
+							up: false,
+							down: false,
+						};
+			
+						this.damage = config.damage || 10;
+						this.maxHealth = config.health || 100;
+						this.health = config.health || 100;
+					};
+					_SpaceFighter.prototype.display = function() {
+						pushMatrix();
+						translate(this.x, this.y);
+						rotate(this.r);
+						scale(0.5);
+			
+						//Draw the right wing
+						pushMatrix();
+						translate(5, 135);
+						rotate(this.wingRot);
+						image(imgs[this.wingImg], 0, 0);
+						popMatrix();
+			
+						//Draw the left wing
+						pushMatrix();
+						translate(-5, 135);
+						scale(-1, 1);
+						rotate(this.wingRot);
+						image(imgs[this.wingImg], 0, 0);
+						popMatrix();
+			
+						//Draw the body    
+						image(imgs[this.bodyImg], -50, 0);
+			
+						popMatrix();
+						for (var i = 0; i < 3; i++) {
+							var y = random(this.y - 5, this.y + 5);
+							ParticleSystem.add({
+								x: this.x + cos(this.r + 90) * 100,
+								y: y + sin(this.r + 90) * 100,
+								s: random(5, 10),
+								clr: color(70, 114 + random(-20, 20), 217 + random(-40, 40)),
+								xv: -2,
+								yv: (this.y - y) / 10,
+								fadeSpeed: random(10, 20),
+								shrinkSpeed: random(0.2, 0.35),
+							});
+						}
+			
+					};
+					_SpaceFighter.prototype.update = function() {
+						if (this.moving.right && abs(this.xv) < this.maxVel) {
+							this.xv += this.acc;
+							this.wingRot = lerp(this.wingRot, this.wingRotRange.acc, 0.05);
+						} else if (this.moving.left && abs(this.xv) < this.maxVel) {
+							this.xv -= this.acc;
+							this.wingRot = lerp(this.wingRot, this.wingRotRange.deacc, 0.05);
+						} else if (this.xv > 0) {
+							this.xv -= this.acc / 2;
+							this.wingRot = lerp(this.wingRot, this.wingRotRange.neutral, 0.05);
+						} else {
+							this.xv += this.acc / 2;
+							this.wingRot = lerp(this.wingRot, this.wingRotRange.neutral, 0.05);
+						}
+						if (this.moving.up && abs(this.yv) < this.maxVel) {
+							this.yv -= this.acc;
+							this.r = lerp(this.r, this.initR - 15, this.lerpSpeed);
+						} else if ((this.moving.down) && abs(this.yv) < this.maxVel) {
+							this.yv += this.acc;
+							this.r = lerp(this.r, this.initR + 15, this.lerpSpeed);
+						} else if (this.yv > 0) {
+							this.yv -= this.acc / 2;
+							this.r = lerp(this.r, this.initR, this.lerpSpeed);
+						} else {
+							this.yv += this.acc / 2;
+							this.r = lerp(this.r, this.initR, this.lerpSpeed);
+						}
+			
+						this.x += this.xv;
+						this.y += this.yv;
+			
+					};
+					_SpaceFighter.prototype.healthBar = function() {
+						pushMatrix();
+						translate(this.x, this.y);
+						rotate(this.r + 90);
+						translate(150, -40);
+			
+						if (this.bodyImg === "enemyMothershipBody") {
+							translate(40, 0);
+						}
+			
+			
+						image(imgs.enemyHealthIcon, 0, 0, 20, 20);
+			
+			
+						noStroke();
+						fill(223, 116, 242);
+						rect(5, 25, 10, map(this.health, 0, this.maxHealth, 0, 55));
+						noStroke();
+			
+						stroke(195, 17, 219);
+						strokeWeight(2);
+						noFill();
+						rect(5, 25, 10, 55);
+						popMatrix();
+					};
+					_SpaceFighter.prototype.run = function() {
+			
+						if (!_BossBattle.paused) {
+							this.update();
+							this.attack();
+							this.navigate();
+						}
+						this.display();
+			
+					};
+					return _SpaceFighter;
+				})();
+			
+				var Player = (function() {
+					var keys = {};
+					keyPressed = function() {
+						keys[key.toString()] = true;
+						keys[keyCode] = true;
+					};
+					keyReleased = function() {
+						delete keys[key.toString()];
+						delete keys[keyCode];
+					};
+					var _Player = function(config) {
+						SpaceFighter.call(this, config);
+			
+						this.scraps = 0;
+						this.damage = 10;
+						this.fireRate = 25;
+						this.healthRegenRate = 0.05;
+					};
+					_Player.prototype = Object.create(SpaceFighter.prototype);
+					_Player.prototype.navigate = function() {
+			
+						this.moving = {
+							up: false,
+							down: false,
+							left: false,
+							right: false
+						};
+						if (keys[LEFT] || keys.a) {
+							this.moving.left = true;
+						} else if (keys[RIGHT] || keys.d) {
+							this.moving.right = true;
+						}
+						if (keys[UP] || keys.w) {
+							this.moving.up = true;
+						} else if (keys[DOWN] || keys.s) {
+							this.moving.down = true;
+						}
+			
+						this.x = constrain(this.x, 125, 900);
+						this.y = constrain(this.y, 55, 545);
+					};
+					_Player.prototype.attack = function() {
+			
+						//Trig to define the point at the end of the gun
+						var rightGun = {
+							x: this.x - 77 + sin(-this.wingRot) * 50 - cos(this.r - 180) * 50,
+							y: this.y + cos(-this.wingRot) * 50 - sin(this.r - 90) * 60 - 3
+						};
+			
+						var leftGun = {
+							x: this.x - 77 + sin(-this.wingRot) * 50 - cos(this.r) * 50,
+							y: this.y - cos(-this.wingRot) * 50 + sin(this.r + 90) * 60 - 3
+						};
+			
+			
+						if (mouseX < this.x) {
+							this.r = lerp(this.r, atan2(this.y - mouseY, this.x - mouseX) + 90, 0.025);
+						} else {
+							this.r = lerp(this.r, atan2(mouseY - this.y, mouseX - this.x) + 90, 0.025);
+						}
+						this.r = constrain(this.r, 60, 120);
+			
+			
+						//Check for shooting?
+						if (keys[32] || mouseIsPressed) {
+							this.fireTime++;
+							if (this.fireTime % floor(this.fireRate) === 1) {
+			
+								//create bullets
+								BulletSystem.add({
+									x: rightGun.x,
+									y: rightGun.y,
+									r: this.r - 90,
+									img: "playerBullet",
+									speed: 10,
+									damage: 10,
+									w: 20,
+									h: 5,
+			
+								});
+								BulletSystem.add({
+									x: leftGun.x,
+									y: leftGun.y,
+									r: this.r - 90,
+									img: "playerBullet",
+									speed: 10,
+									damage: 10,
+									w: 20,
+									h: 5,
+			
+			
+								});
+							}
+						}
+			
+						this.health += this.healthRegenRate;
+						this.health = constrain(this.health, 0, this.maxHealth);
+					};
+					_Player.prototype.getCollisionBox = function() {
+			
+						return ([{
+								x: this.x,
+								y: this.y
+							},
+							{
+								x: this.x - 110 + sin(-this.wingRot) * 100 - cos(this.r - 180) * 50,
+								y: this.y + cos(-this.wingRot) * 50 - sin(this.r - 90) * 100 - 3,
+							},
+							{
+								x: this.x - 110 + sin(-this.wingRot) * 100 - cos(this.r) * 50,
+								y: this.y - cos(-this.wingRot) * 50 + sin(this.r + 90) * 100 - 3,
+							}
+						]);
+			
+					};
+					return new_.call(_Player, {
+						x: 150,
+						y: 300,
+					});
+				})();
+			
+				var EnemySpaceFighter = (function() {
+					var _Enemy = function(config) {
+						SpaceFighter.call(this, config);
+			
+					};
+					_Enemy.prototype = Object.create(SpaceFighter.prototype);
+					_Enemy.prototype.navigate = function() {
+						this.moving.left = true;
+						this.maxVel = 2;
+					};
+					_Enemy.prototype.attack = function() {
+						//Trig to define the point at the end of the gun
+			
+						this.fireTime++;
+						if (this.fireTime % 20 === 1 && this.x < 1000) {
+							BulletSystem.add({
+								x: this.x + 50,
+								y: this.y - 57,
+								r: 180,
+								img: "enemyBullet",
+								speed: 10,
+								damage: this.damage,
+								w: 20,
+								h: 5,
+			
+							});
+							BulletSystem.add({
+								x: this.x + 55,
+								y: this.y + 43,
+								r: 180,
+								img: "enemyBullet",
+								speed: 10,
+								damage: 10,
+								w: 20,
+								h: 5,
+							});
+						}
+					};
+					_Enemy.prototype.getCollisionBox = function() {
+						return ([{
+								x: this.x,
+								y: this.y,
+							},
+							{
+								x: this.x + 105,
+								y: this.y - 55,
+							},
+							{
+								x: this.x + 105,
+								y: this.y + 55,
+							},
+						]);
+					};
+					return _Enemy;
+				})();
+			
+				var EnemyLaserFighter = (function() {
+					var _Enemy = function(config) {
+						SpaceFighter.call(this, config);
+			
+						//Where is it going to?
+						this.bearing = {
+							x: random(450, 750),
+							y: random(150, 450)
+						};
+			
+						this.state = "flying";
+						this.attackTimer = 0;
+						this.targetR = 0;
+			
+						this.lightnings = [];
+			
+						this.speed = 0;
+					};
+					_Enemy.prototype = Object.create(SpaceFighter.prototype);
+					_Enemy.prototype.display = function() {
+			
+						pushMatrix();
+						translate(this.x, this.y);
+						rotate(this.r);
+						scale(0.666);
+			
+						//Draw the right wing
+						pushMatrix();
+						translate(-5, 70);
+						rotate(this.wingRot);
+						image(imgs[this.wingImg], 0, -120);
+			
+						ellipse(0, 0, 10, 10);
+						popMatrix();
+			
+						//Draw the left wing
+						pushMatrix();
+						translate(5, 70);
+						scale(-1, 1);
+						rotate(this.wingRot);
+						image(imgs[this.wingImg], 0, -120);
+			
+						ellipse(0, 0, 10, 10);
+						popMatrix();
+			
+						//Draw the body    
+						image(imgs[this.bodyImg], -50, 40);
+			
+						popMatrix();
+						for (var i = 0; i < 3; i++) {
+							var y = random(this.y - 5, this.y + 5);
+							ParticleSystem.add({
+								x: this.x + cos(this.r + 90) * 90,
+								y: y + sin(this.r + 90) * 90,
+								s: random(5, 10),
+								clr: color(70, 114 + random(-20, 20), 217 + random(-40, 40)),
+								xv: cos(this.r + 90) * 1.5,
+								yv: sin(this.r + 90) * 1.5,
+								fadeSpeed: random(10, 20),
+								shrinkSpeed: random(0.2, 0.35),
+							});
+						}
+					};
+					_Enemy.prototype.navigate = function() {
+			
+						if (dist(this.x, this.y, this.bearing.x, this.bearing.y) < 50 && this.state === "flying") {
+			
+							this.state = "charging";
+							this.targetR = atan2(this.y - Player.y, this.x - Player.x);
+						}
+			
+			
+					};
+					_Enemy.prototype.update = function() {
+			
+						if (this.state === "flying" || this.state === "flyaway") {
+							var r = atan2(this.y - this.bearing.y, this.x - this.bearing.x);
+							this.x -= cos(r) * this.speed;
+							this.y -= sin(r) * this.speed;
+			
+							this.wingRot = lerp(this.wingRot, this.wingRotRange.acc, 0.1);
+							this.speed = lerp(this.speed, 4, 0.05);
+						} else if (this.state === "charging") {
+							this.wingRot = lerp(this.wingRot, this.wingRotRange.attack, 0.03);
+			
+			
+						}
+			
+					};
+					_Enemy.prototype.attack = function() {
+			
+						switch (this.state) {
+							case "flying":
+								this.r = atan2(this.y - Player.y, this.x - Player.x) - 90;
+								break;
+							case "charging":
+								this.attackTimer++;
+			
+								var cosR = cos(this.targetR);
+								var sinR = sin(this.targetR);
+			                    strokeCap(ROUND);
+								stroke(232, 223, 46, (sin(this.attackTimer * 10) * 25) ^ 2);
+								strokeWeight(20);
+								line(this.x, this.y, this.x - cosR * 2000, this.y - sinR * 2000);
+			
+								stroke(232, 223, 46, (sin(this.attackTimer * 10) * 25) ^ 2);
+								strokeWeight(30);
+								line(this.x, this.y, this.x - cosR * 2000, this.y - sinR * 2000);
+			
+								stroke(255, (sin(this.attackTimer * 10) * 50) ^ 2);
+								strokeWeight(5);
+								line(this.x, this.y, this.x - cosR * 2000, this.y - sinR * 2000);
+			
+								noStroke();
+								fill(255, 200, 255, this.attackTimer * 1.2);
+								ellipse(this.x, this.y, this.attackTimer, this.attackTimer);
+			
+								if (this.attackTimer % 2 === 0) {
+									var r = random(0, 360);
+									this.lightnings.push([r, this.x + cos(r) * max(this.attackTimer / 2, 20) + random(-5, 5), this.y + sin(r) * max(20, this.attackTimer / 2) + random(-5, 5)]);
+								}
+			
+								for (var i = 0; i < this.lightnings.length; i++) {
+									var l = this.lightnings[i];
+			
+									var length = random(2, 7);
+									var ang = l[0] + random(-20, 20);
+									l.push(l[l.length - 2] - cos(ang) * length, l[l.length - 1] - sin(ang) * length);
+			
+									if (l.length > 20) {
+										this.lightnings.splice(i, 1);
+									}
+								}
+			
+								for (var i = 0; i < this.lightnings.length; i++) {
+									var l = this.lightnings[i];
+									noFill();
+									stroke(255, 100, 100, this.fireTime / 4 + 30);
+									strokeWeight(8);
+									beginShape();
+									for (var j = 1; j < l.length - 2; j += 2) {
+										vertex(l[j], l[j + 1]);
+									}
+									endShape();
+			
+									stroke(255, 200, 255, this.fireTime / 2 + 60);
+									strokeWeight(3);
+									beginShape();
+									for (var j = 1; j < l.length - 2; j += 2) {
+										vertex(l[j], l[j + 1]);
+									}
+									endShape();
+			
+			
+									stroke(255, 255, 255, this.fireTime / 2 + 60);
+									strokeWeight(1);
+									beginShape();
+									for (var j = 1; j < l.length - 2; j += 2) {
+										vertex(l[j], l[j + 1]);
+									}
+									endShape();
+								}
+								if (this.attackTimer > 100) {
+			
+									this.state = "shooting";
+								}
+								break;
+							case "shooting":
+							    strokeCap(ROUND);
+								noStroke();
+								fill(255, 200, 255, this.attackTimer * 1.2);
+								ellipse(this.x, this.y, this.attackTimer, this.attackTimer);
+			
+			
+								var length = map(this.attackTimer, 100, 0, 0, 1000);
+			
+								noFill();
+								stroke(255, 0, 100, 50);
+								strokeWeight(20);
+								line(this.x, this.y, this.x - cos(this.targetR) * length, this.y - sin(this.targetR) * length);
+			
+								stroke(255, 200, 255, 50);
+								strokeWeight(10);
+								line(this.x, this.y, this.x - cos(this.targetR) * length, this.y - sin(this.targetR) * length);
+			
+								stroke(255, 255, 255, 100);
+								strokeWeight(5);
+								line(this.x, this.y, this.x - cos(this.targetR) * length, this.y - sin(this.targetR) * length);
+			
+								pushMatrix();
+								translate(this.x - cos(this.targetR) * (length + 10), this.y - sin(this.targetR) * (length + 10));
+								rotate(this.targetR);
+								image(imgs.blastImg, -15, -30, 30, 60);
+								popMatrix();
+			
+								var distanceToParticle = random(0, length);
+								ParticleSystem.add({
+									x: this.x - cos(this.targetR) * distanceToParticle,
+									y: this.y - sin(this.targetR) * distanceToParticle,
+									clr: color(255, 100, 200, 50),
+									xv: -cos(this.targetR + random(-30, 30)),
+									yv: -sin(this.targetR + random(-30, 30)),
+									s: random(5, 10),
+									shape: "ellipse"
+								});
+			
+								if (Math.polyLine(Player.getCollisionBox(), this.x - cos(this.targetR) * length, this.y - sin(this.targetR) * length, this.x, this.y)) {
+									Player.health -= this.damage;
+								}
+			
+								this.attackTimer = lerp(this.attackTimer, 0, 0.05);
+								this.wingRot = lerp(this.wingRot, 0, 0.1);
+			
+								if (abs(this.attackTimer) < 1) {
+									this.state = "decharge";
+									this.attackTimer = 50;
+								}
+								break;
+			
+							case "decharge":
+							    strokeCap(ROUND);
+								noFill();
+								stroke(255, 0, 100, this.attackTimer);
+								strokeWeight(20);
+								line(this.x, this.y, this.x - cos(this.targetR) * 2000, this.y - sin(this.targetR) * 2000);
+			
+								stroke(255, 200, 255, this.attackTimer);
+								strokeWeight(10);
+								line(this.x, this.y, this.x - cos(this.targetR) * 2000, this.y - sin(this.targetR) * 2000);
+			
+								stroke(255, 255, 255, this.attackTimer);
+								strokeWeight(5);
+								line(this.x, this.y, this.x - cos(this.targetR) * 2000, this.y - sin(this.targetR) * 2000);
+			
+								this.attackTimer = lerp(this.attackTimer, 0, 0.1);
+			
+								if (this.attackTimer < 1) {
+									this.state = "flyaway";
+									this.bearing.x = -250;
+									this.bearing.y = random(0, 600);
+									this.speed = 0;
+								}
+								break;
+							case "flyaway":
+								this.r = lerp(this.r, atan2(this.y - this.bearing.y, this.x - this.bearing.x) - 90, 0.05);
+								break;
+			
+						}
+					};
+					_Enemy.prototype.getCollisionBox = function() {
+			
+						var cr = cos(this.r);
+						var sr = sin(this.r);
+						var cr2 = cos(this.r + 90);
+						var sr2 = sin(this.r + 90);
+			
+			
+						return ([{
+								x: this.x + cr2 * 25,
+								y: this.y + sr2 * 25
+							},
+							{
+								x: this.x + cr2 * 40 + cr * 20,
+								y: this.y + sr2 * 40 + sr * 20
+							},
+							{
+								x: this.x + cr2 * 46.62 + cr * 3.33 + cos(this.r + this.wingRot) * 27 - cos(this.r + this.wingRot + 90) * 77,
+								y: this.y + sr2 * 46.62 + sr * 3.33 + sin(this.r + this.wingRot) * 27 - sin(this.r + this.wingRot + 90) * 77
+							},
+							{
+								x: this.x + cr2 * 46.62 + cr * 3.33 + cos(this.r + this.wingRot) * 55 + cos(this.r + this.wingRot + 90) * 15,
+								y: this.y + sr2 * 46.62 + sr * 3.33 + sin(this.r + this.wingRot) * 55 + sin(this.r + this.wingRot + 90) * 15
+							},
+							{
+								x: this.x + cr2 * 46.62 + cr * 3.33 + cos(this.r + this.wingRot) * 35 + cos(this.r + this.wingRot + 90) * 55,
+								y: this.y + sr2 * 46.62 + sr * 3.33 + sin(this.r + this.wingRot) * 35 + sin(this.r + this.wingRot + 90) * 55
+							},
+							{
+								x: this.x + cr2 * 46.62 - cr * 3.33 - cos(this.r - this.wingRot) * 35 + cos(this.r - this.wingRot + 90) * 55,
+								y: this.y + sr2 * 46.62 - sr * 3.33 - sin(this.r - this.wingRot) * 35 + sin(this.r - this.wingRot + 90) * 55
+							},
+							{
+								x: this.x + cr2 * 46.62 - cr * 3.33 - cos(this.r - this.wingRot) * 55 + cos(this.r - this.wingRot + 90) * 15,
+								y: this.y + sr2 * 46.62 - sr * 3.33 - sin(this.r - this.wingRot) * 55 + sin(this.r - this.wingRot + 90) * 15
+							},
+							{
+								x: this.x + cr2 * 46.62 - cr * 3.33 - cos(this.r - this.wingRot) * 27 - cos(this.r - this.wingRot + 90) * 77,
+								y: this.y + sr2 * 46.62 - sr * 3.33 - sin(this.r - this.wingRot) * 27 - sin(this.r - this.wingRot + 90) * 77
+							},
+							{
+								x: this.x + cr2 * 40 - cr * 20,
+								y: this.y + sr2 * 40 - sr * 20
+							},
+						]);
+					};
+					return _Enemy;
+				})();
+			
+				var EnemyHomingFighter = (function() {
+					var _Enemy = function(config) {
+						SpaceFighter.call(this, config);
+			
+						this.state = "flying";
+						this.fireX = random(650,800);
+					};
+					_Enemy.prototype = Object.create(SpaceFighter.prototype);
+					_Enemy.prototype.display = function() {
+						pushMatrix();
+						translate(this.x, this.y);
+						rotate(this.r);
+						scale(0.8);
+			
+						if (this.state === "flying") {
+							pushMatrix();
+							translate(50, 50);
+							rotate(90);
+							scale(0.2);
+							image(imgs.nuke, 0, 0);
+							popMatrix();
+			
+							pushMatrix();
+							translate(-30, 50);
+							rotate(90);
+							scale(0.2);
+							image(imgs.nuke, 0, 0);
+							popMatrix();
+						}
+			
+						//Draw the right wing
+						pushMatrix();
+						translate(-5, 0);
+						//rotate(this.wingRot);
+						image(imgs[this.wingImg], -60, 70);
+						popMatrix();
+			
+						//Draw the left wing
+						pushMatrix();
+						translate(-5, 0);
+						scale(-1, 1);
+						//rotate(this.wingRot);
+						image(imgs[this.wingImg], -70, 70);
+						popMatrix();
+			
+						//Draw the body    
+						image(imgs[this.bodyImg], -30, 0);
+			
+						popMatrix();
+						for (var i = 0; i < 3; i++) {
+							var y = random(this.y - 5, this.y + 5);
+							ParticleSystem.add({
+								x: this.x + cos(this.r + 90) * 90,
+								y: y + sin(this.r + 90) * 90,
+								s: random(5, 10),
+								clr: color(70, 114 + random(-20, 20), 217 + random(-40, 40)),
+								xv: cos(this.r + 90) * 1.5,
+								yv: sin(this.r + 90) * 1.5,
+								fadeSpeed: random(10, 20),
+								shrinkSpeed: random(0.2, 0.35),
+							});
+						}
+					};
+					_Enemy.prototype.navigate = function() {
+						this.moving.left = true;
+					};
+					_Enemy.prototype.attack = function() {
+						if (this.x < this.fireX && this.state !== "attacking") {
+							this.state = "attacking";
+			
+							BulletSystem.add({
+								x: this.x + 35,
+								y: this.y + 25,
+								r: 180,
+								img: "nuke",
+								speed: 10,
+								damage: this.damage,
+								w: 50,
+								h: 15,
+								target: Player,
+			
+							}, "Nuke");
+							BulletSystem.add({
+								x: this.x + 35,
+								y: this.y - 40,
+								r: 180,
+								img: "nuke",
+								speed: 10,
+								damage: this.damage,
+								w: 50,
+								h: 15,
+								target: Player,
+			
+							}, "Nuke");
+			
+			
+						}
+					};
+					_Enemy.prototype.getCollisionBox = function() {
+			
+						return ([{
+								x: this.x,
+								y: this.y,
+							},
+							{
+								x: this.x + 15,
+								y: this.y - 13,
+							},
+							{
+								x: this.x + 60,
+								y: this.y - 13,
+							},
+							{
+								x: this.x + 80,
+								y: this.y - 50,
+							},
+							{
+								x: this.x + 100,
+								y: this.y,
+							},
+							{
+								x: this.x + 80,
+								y: this.y + 50,
+							},
+							{
+								x: this.x + 60,
+								y: this.y + 13,
+							},
+							{
+								x: this.x + 15,
+								y: this.y + 13,
+							},
+						]);
+					};
+			
+					return _Enemy;
+				})();
+			
+				var EnemyKamikazeFighter = (function() {
+					var _Enemy = function(config) {
+						SpaceFighter.call(this, config);
+			
+						this.maxVel = 16;
+						this.acc = 0.1;
+					};
+					_Enemy.prototype = Object.create(SpaceFighter.prototype);
+					_Enemy.prototype.display = function() {
+						pushMatrix();
+						translate(this.x, this.y);
+						rotate(this.r);
+						scale(0.75);
+			
+						//Draw the right wing
+						pushMatrix();
+						translate(0, 50);
+						rotate(this.wingRot);
+						image(imgs[this.wingImg], -90, 0);
+						popMatrix();
+			
+						//Draw the left wing
+						pushMatrix();
+						scale(-1, 1);
+						translate(0, 50);
+						rotate(this.wingRot);
+						image(imgs[this.wingImg], -90, 0);
+						popMatrix();
+			
+						//Draw the body    
+						image(imgs[this.bodyImg], -20, 0);
+			
+						popMatrix();
+			
+						for (var i = 0; i < 5; i++) {
+							var y = random(this.y - 5, this.y + 5);
+							ParticleSystem.add({
+								x: this.x + cos(this.r + 90) * 90,
+								y: y + sin(this.r + 90) * 90,
+								s: random(5, 10),
+								clr: color(70, 114 + random(-20, 20), 217 + random(-40, 40)),
+								xv: cos(this.r + 90) * 1.5,
+								yv: sin(this.r + 90) * 1.5,
+								fadeSpeed: random(10, 20),
+								shrinkSpeed: random(0.2, 0.35),
+							});
+						}
+			
+						this.getCollisionBox();
+					};
+					_Enemy.prototype.navigate = function() {
+						this.moving.left = true;
+			
+						if (this.y > Player.y + 50) {
+							this.moving.up = true;
+							this.moving.down = false;
+						} else if (this.y < Player.y - 50) {
+							this.moving.down = true;
+							this.moving.up = false;
+						} else {
+							this.moving.up = false;
+							this.moving.down = false;
+						}
+					};
+					_Enemy.prototype.attack = function() {
+			
+						this.wingRot = this.xv * 2;
+						this.r = -this.yv * 2 - 90;
+			
+						if (this.x > 900) {
+							this.maxVel = 3;
+						} else {
+							this.maxVel = 16;
+						}
+			
+					};
+					_Enemy.prototype.getCollisionBox = function() {
+						stroke(255, 255, 0);
+						fill(255, 0, 0, 50);
+			
+			
+						var cr = cos(this.r);
+						var sr = sin(this.r);
+						var cr2 = cos(this.r + 90);
+						var sr2 = sin(this.r + 90);
+			
+						return ([{
+								x: this.x,
+								y: this.y
+							},
+							{
+								x: this.x + cr * 12 + cr2 * 45,
+								y: this.y + sr * 12 + sr2 * 45
+							},
+							{
+								x: this.x + cr * 8 + cr2 * 30 + cos(this.r + 90 - this.wingRot) * 33 + cos(this.r - this.wingRot) * 56,
+								y: this.y + sr * 8 + sr2 * 30 + sin(this.r + 90 - this.wingRot) * 33 + sin(this.r - this.wingRot) * 56
+							},
+							{
+								x: this.x + cr * 8 + cr2 * 30 + cos(this.r + 90 - this.wingRot) * 44 + cos(this.r - this.wingRot) * 56,
+								y: this.y + sr * 8 + sr2 * 30 + sin(this.r + 90 - this.wingRot) * 44 + sin(this.r - this.wingRot) * 56
+							},
+							{
+								x: this.x + cr2 * 90,
+								y: this.y + sr2 * 90
+							},
+							{
+								x: this.x - cr * 8 + cr2 * 30 + cos(this.r + 90 + this.wingRot) * 44 - cos(this.r + this.wingRot) * 56,
+								y: this.y - sr * 8 + sr2 * 30 + sin(this.r + 90 + this.wingRot) * 44 - sin(this.r + this.wingRot) * 56
+							},
+							{
+								x: this.x - cr * 8 + cr2 * 30 + cos(this.r + 90 + this.wingRot) * 33 - cos(this.r + this.wingRot) * 56,
+								y: this.y - sr * 8 + sr2 * 30 + sin(this.r + 90 + this.wingRot) * 33 - sin(this.r + this.wingRot) * 56
+							},
+			
+							{
+								x: this.x - cr * 12 + cr2 * 45,
+								y: this.y - sr * 12 + sr2 * 45
+							},
+			
+						]);
+					};
+			
+					return (_Enemy);
+				})();
+			
+				var EnemyArmoredFighter = (function() {
+					var _Enemy = function(config) {
+						SpaceFighter.call(this, config);
+			
+						this.maxVel = 1.5;
+			
+						this.offset = ~~random(0, 200);
+					};
+					_Enemy.prototype = Object.create(SpaceFighter.prototype);
+					_Enemy.prototype.display = function() {
+						pushMatrix();
+						translate(this.x, this.y);
+						rotate(this.r);
+						scale(0.8);
+			
+						//Draw the right wing
+						pushMatrix();
+						rotate(this.wingRot);
+						image(imgs[this.wingImg], -70, -30);
+						popMatrix();
+			
+						//Draw the left wing
+						pushMatrix();
+						scale(-1, 1);
+						rotate(this.wingRot);
+						image(imgs[this.wingImg], -70, -30);
+						popMatrix();
+			
+						//Draw the body    
+						image(imgs[this.bodyImg], -50, 0);
+			
+						popMatrix();
+			
+						for (var i = 0; i < 3; i++) {
+							var y = random(this.y - 5, this.y + 5);
+							ParticleSystem.add({
+								x: this.x + cos(this.r + 90) * 125,
+								y: y + sin(this.r + 90) * 125,
+								s: random(5, 10),
+								clr: color(70, 114 + random(-20, 20), 217 + random(-40, 40)),
+								xv: cos(this.r + 90) * 1.5,
+								yv: sin(this.r + 90) * 1.5,
+								fadeSpeed: random(10, 20),
+								shrinkSpeed: random(0.2, 0.35),
+							});
+						}
+			
+					};
+					_Enemy.prototype.navigate = function() {
+						this.moving.left = true;
+					};
+					_Enemy.prototype.attack = function() {
+						if ((frameCount + this.offset) % 200 === 0 && this.x < 900) {
+							BulletSystem.add({
+								x: this.x,
+								y: this.y - 10,
+								r: 180,
+								img: "enemyBullet",
+								speed: 10,
+								damage: this.damage,
+								w: 30,
+								h: 15,
+							});
+							this.xv = 3;
+						}
+					};
+					_Enemy.prototype.getCollisionBox = function() {
+			
+						return ([{
+								x: this.x,
+								y: this.y,
+							},
+							{
+								x: this.x + 15,
+								y: this.y + 20,
+							},
+							{
+								x: this.x - 35,
+								y: this.y + 30
+							},
+							{
+								x: this.x - 35,
+								y: this.y + 40
+							},
+							{
+								x: this.x + 10,
+								y: this.y + 55
+							},
+							{
+								x: this.x + 100,
+								y: this.y + 55
+							},
+							{
+								x: this.x + 120,
+								y: this.y
+							},
+							{
+								x: this.x + 10,
+								y: this.y - 55
+							},
+							{
+								x: this.x - 35,
+								y: this.y - 40,
+							},
+							{
+								x: this.x - 35,
+								y: this.y - 30
+							},
+							{
+								x: this.x + 15,
+								y: this.y - 20,
+							},
+						]);
+					};
+					return _Enemy;
+				})();
+			
+				var EnemyDoubleFighter = (function() {
+					var _Enemy = function(config) {
+						SpaceFighter.call(this, config);
+			
+						this.maxVel = 2;
+					};
+					_Enemy.prototype = Object.create(SpaceFighter.prototype);
+					_Enemy.prototype.display = function() {
+						pushMatrix();
+						translate(this.x, this.y);
+						rotate(this.r);
+			
+			
+						//Draw the right wing
+						pushMatrix();
+						translate(-5, 0);
+						rotate(this.wingRot);
+						image(imgs[this.wingImg], -70, 50);
+						popMatrix();
+			
+						//Draw the left wing
+						pushMatrix();
+						translate(-5, 0);
+						scale(-1, 1);
+						rotate(this.wingRot);
+						image(imgs[this.wingImg], -80, 50);
+						popMatrix();
+			
+						//Draw the body    
+						image(imgs[this.bodyImg], -50, 0);
+			
+			
+						popMatrix();
+			
+						for (var i = 0; i < 3; i++) {
+							var y = random(this.y - 5, this.y + 5);
+							ParticleSystem.add({
+								x: this.x + cos(this.r + 90) * 90,
+								y: y + sin(this.r + 90) * 90,
+								s: random(5, 10),
+								clr: color(70, 114 + random(-20, 20), 217 + random(-40, 40)),
+								xv: cos(this.r + 90) * 1.5,
+								yv: sin(this.r + 90) * 1.5,
+								fadeSpeed: random(10, 20),
+								shrinkSpeed: random(0.2, 0.35),
+							});
+						}
+					};
+					_Enemy.prototype.navigate = function() {
+						this.moving.left = true;
+					};
+					_Enemy.prototype.attack = function() {
+						if (frameCount % 20 === 0 && this.x < 1000) {
+							BulletSystem.add({
+								x: this.x + 50,
+								y: this.y - 45,
+								r: 180,
+								img: "enemyBullet",
+								speed: 10,
+								damage: 4,
+								w: 15,
+								h: 5,
+			
+							});
+							BulletSystem.add({
+								x: this.x + 50,
+								y: this.y + 40,
+								r: 180,
+								img: "enemyBullet",
+								speed: 10,
+								damage: 4,
+								w: 15,
+								h: 5,
+							});
+						}
+						if (frameCount % 20 === 10 && this.x < 1000) {
+							BulletSystem.add({
+								x: this.x + 35,
+								y: this.y - 75,
+								r: 180,
+								img: "enemyBullet",
+								speed: 10,
+								damage: 3,
+								w: 15,
+								h: 3,
+			
+							});
+							BulletSystem.add({
+								x: this.x + 35,
+								y: this.y + 75,
+								r: 180,
+								img: "enemyBullet",
+								speed: 10,
+								damage: 3,
+								w: 15,
+								h: 3,
+							});
+						}
+					};
+					_Enemy.prototype.getCollisionBox = function() {
+						return ([{
+								x: this.x,
+								y: this.y,
+							},
+							{
+								x: this.x + 90,
+								y: this.y - 85,
+							},
+							{
+								x: this.x + 90,
+								y: this.y + 85
+							}
+						]);
+					};
+					return _Enemy;
+				})();
+			
+				var EnemyMothership = (function() {
+					var _Enemy = function(config) {
+						SpaceFighter.call(this, config);
+			
+					};
+					_Enemy.prototype = Object.create(SpaceFighter.prototype);
+					_Enemy.prototype.display = function() {
+						pushMatrix();
+						translate(this.x, this.y);
+						rotate(this.r);
+			
+						if (this.fireTime % 200 < 50) {
+							pushMatrix();
+							translate(0, max(map(this.fireTime % 100, 0, 20, 30, 0), 0));
+			
+			
+							pushMatrix();
+							translate(65, 50);
+							rotate(90);
+							scale(0.2);
+							image(imgs.nuke, 0, 0);
+							popMatrix();
+			
+							pushMatrix();
+							translate(-45, 50);
+							rotate(90);
+							scale(0.2);
+							image(imgs.nuke, 0, 0);
+							popMatrix();
+			
+			
+							popMatrix();
+						}
+			
+			
+						//Draw the right wing
+						pushMatrix();
+						translate(-5, 0);
+						rotate(this.wingRot);
+						image(imgs[this.wingImg], -145, 50);
+						popMatrix();
+			
+			
+						//Draw the left wing
+						pushMatrix();
+						translate(-5, 0);
+						scale(-1, 1);
+						//rotate(this.wingRot);
+						image(imgs[this.wingImg], -155, 50);
+						popMatrix();
+			
+						//Draw the body    
+						image(imgs[this.bodyImg], -50, 0);
+			
+			
+						popMatrix();
+						for (var i = 0; i < 3; i++) {
+							var y = random(this.y - 10, this.y + 10);
+							ParticleSystem.add({
+								x: this.x + cos(this.r + 90) * 170,
+								y: y + sin(this.r + 90) * 170,
+								s: random(5, 10),
+								clr: color(70, 114 + random(-20, 20), 217 + random(-40, 40)),
+								xv: cos(this.r + 90) * 2,
+								yv: sin(this.r + 90) * 2,
+								fadeSpeed: random(10, 15),
+								shrinkSpeed: random(0.2, 0.3),
+							});
+						}
+			
+					};
+					_Enemy.prototype.navigate = function() {
+						if (this.x > 800) {
+							this.moving.left = true;
+						} else {
+							this.moving.left = false;
+						}
+						if (this.y < Player.y) {
+							this.moving.down = true;
+							this.moving.up = false;
+						} else {
+							this.moving.up = true;
+							this.moving.down = false;
+						}
+						this.y = constrain(this.y, 120, 480);
+					};
+					_Enemy.prototype.attack = function() {
+			
+						if (this.x < 900) {
+							this.fireTime++;
+						}
+						if (this.fireTime % 200 === 49) {
+							BulletSystem.add({
+								x: this.x + 50,
+								y: this.y + 45,
+								r: 180,
+								img: "nuke",
+								speed: 10,
+								damage: 20,
+								w: 65,
+								h: 20,
+								target: Player,
+			
+							}, "Nuke");
+							BulletSystem.add({
+								x: this.x + 50,
+								y: this.y - 65,
+								r: 180,
+								img: "nuke",
+								speed: 10,
+								damage: 20,
+								w: 65,
+								h: 20,
+								target: Player,
+			
+							}, "Nuke");
+						}
+						if (this.fireTime % 20 === 1) {
+			
+							var rightGun = {
+								x: this.x + cos(this.r) * 135 + sin(-this.r) * 35,
+								y: this.y + sin(this.r) * 135 + cos(-this.r) * 35,
+							};
+							var leftGun = {
+								x: this.x + cos(this.r + 180) * 135 + sin(-this.r) * 35,
+								y: this.y + sin(this.r + 180) * 135 + cos(-this.r) * 35,
+							};
+			
+							BulletSystem.add({
+								x: rightGun.x,
+								y: rightGun.y,
+								r: this.r - 90,
+								img: "enemyBullet",
+								speed: 10,
+								damage: 8,
+								w: 25,
+								h: 5,
+			
+							});
+							BulletSystem.add({
+								x: leftGun.x,
+								y: leftGun.y,
+								r: this.r - 90,
+								img: "enemyBullet",
+								speed: 10,
+								damage: 8,
+								w: 25,
+								h: 5,
+			
+							});
+						}
+					};
+					_Enemy.prototype.getCollisionBox = function() {
+			
+						var cr = cos(this.r);
+						var sr = sin(this.r);
+			
+						var cr2 = cos(this.r + 90);
+						var sr2 = sin(this.r + 90);
+			
+						return ([{
+								x: this.x,
+								y: this.y
+							},
+							{
+								x: this.x + cr * 50 + cr2 * 90,
+								y: this.y + sr * 50 + sr2 * 90
+							},
+							{
+								x: this.x + cr * 80 + cr2 * 55,
+								y: this.y + sr * 80 + sr2 * 55
+							},
+							{
+								x: this.x + cr * 100 + cr2 * 65,
+								y: this.y + sr * 100 + sr2 * 65
+							},
+							{
+								x: this.x + cr * 100 + cr2 * 100,
+								y: this.y + sr * 100 + sr2 * 100
+							},
+							{
+								x: this.x + cr * 130 + cr2 * 85,
+								y: this.y + sr * 130 + sr2 * 85
+							},
+							{
+								x: this.x + cr * 135 + cr2 * 110,
+								y: this.y + sr * 135 + sr2 * 110
+							},
+							{
+								x: this.x + cr * 75 + cr2 * 160,
+								y: this.y + sr * 75 + sr2 * 160
+							},
+			
+							{
+								x: this.x - cr * 75 + cr2 * 160,
+								y: this.y - sr * 75 + sr2 * 160
+							},
+							{
+								x: this.x - cr * 135 + cr2 * 110,
+								y: this.y - sr * 135 + sr2 * 110
+							},
+							{
+								x: this.x - cr * 130 + cr2 * 85,
+								y: this.y - sr * 130 + sr2 * 85
+							},
+							{
+								x: this.x - cr * 100 + cr2 * 100,
+								y: this.y - sr * 100 + sr2 * 100
+							},
+							{
+								x: this.x - cr * 100 + cr2 * 65,
+								y: this.y - sr * 100 + sr2 * 65
+							},
+							{
+								x: this.x - cr * 80 + cr2 * 55,
+								y: this.y - sr * 80 + sr2 * 55
+							},
+							{
+								x: this.x - cr * 50 + cr2 * 90,
+								y: this.y - sr * 50 + sr2 * 90
+							},
+						]);
+			
+					};
+					return _Enemy;
+				})();
+			
+				var UpgradeButtons = (function() {
+			
+					var _UpgradeButton = function(config) {
+						this.x = config.x;
+						this.y = config.y;
+			
+						this.imgPath = config.imgPath;
+						this.title = config.title;
+			
+						this.onClick = config.onClick;
+			
+						this.opacity = 50;
+						this.scale = 1;
+			
+						this.upgradeCost = 2;
+						this.hovering = false;
+			
+						this.numBars = 1;
+					};
+					var _UpgradeSystem = {
+						shopBarX: 180,
+						toShopBarX: 180,
+						textY: 0,
+						toTextY: 0,
+						shopOpen: false,
+						buttons: {
+							reload: new_.call(_UpgradeButton, {
+								x: 737,
+								y: 70,
+								imgPath: "reloadIcon",
+								title: "Fire Rate",
+								onClick: function() {
+									Player.fireRate -= 1.5;
+								},
+							}),
+							damage: new_.call(_UpgradeButton, {
+								x: 737,
+								y: 245,
+								imgPath: "damageIcon",
+								title: "Damage",
+								onClick: function() {
+									Player.damage += 1.5;
+								},
+							}),
+							shields: new_.call(_UpgradeButton, {
+								x: 737,
+								y: 420,
+								imgPath: "healthIcon",
+								title: "Shield Regen",
+								onClick: function() {
+									Player.healthRegenRate += 0.015;
+								}
+							})
+						},
+					};
+			
+					_UpgradeButton.prototype.display = function() {
+						pushMatrix();
+						translate(this.x + 75 + _UpgradeSystem.shopBarX, this.y + 75);
+						scale(this.scale);
+						translate(-75, -75);
+			
+						image(imgs.upgradeCard, 0, 0, 150, 150);
+						image(imgs[this.imgPath], 55, 20, 40, 40);
+			
+						fill(240, 250, 250);
+						textFont(createFont("Noto Sans Bold"), 15);
+						text(this.title, 75, 75);
+			
+						fill(240, 250, 250);
+						textFont(createFont("Noto Sans"), 12);
+			
+						if (this.numBars >= 9) {
+							text("Max Upgrade", 75, 123);
+						} else if (!this.hovering) {
+							text("Upgrade: $" + this.upgradeCost, 75, 123);
+						} else if (Player.scraps >= this.upgradeCost) {
+							text("Click to Buy", 75, 123);
+						} else {
+							text("Too Expensive", 75, 123);
+						}
+			
+						stroke(255);
+						strokeWeight(1);
+						fill(240, 240, 250, this.opacity);
+						rect(25, 115, 100, 20, 3);
+			
+						noStroke();
+						image(imgs.upgradeBar, 25, 85);
+						for (var i = 0; i < this.numBars; i++) {
+			
+							fill(lerpColor(color(143, 225, 255), color(240, 240, 250), i / 9));
+							if (i >= 5) {
+								rect(30 + i * 10, 95, 8, 9, 3);
+							} else {
+								rect(30 + i * 10, 90, 8, 14, 3);
+							}
+						}
+			
+						popMatrix();
+					};
+					_UpgradeButton.prototype.update = function() {
+						if (Math.mouseRect(this.x + 20 + _UpgradeSystem.shopBarX, this.y + 115, 110, 25)) {
+							this.opacity = lerp(this.opacity, 60, 0.1);
+							this.hovering = true;
+							cursor("pointer");
+							if (click && Player.scraps >= this.upgradeCost && this.numBars < 9) {
+								Player.scraps -= this.upgradeCost;
+								this.upgradeCost = ceil(this.upgradeCost * 1.5);
+								this.numBars++;
+								this.onClick();
+							}
+						} else {
+							this.opacity = lerp(this.opacity, 30, 0.1);
+							this.hovering = false;
+						}
+			
+						if (Math.mouseRect(this.x + _UpgradeSystem.shopBarX, this.y, 150, 150)) {
+							this.scale = lerp(this.scale, 1.05, 0.1);
+						} else {
+							this.scale = lerp(this.scale, 1, 0.1);
+						}
+					};
+					_UpgradeButton.prototype.run = function() {
+						this.update();
+						this.display();
+					};
+			
+					_UpgradeSystem.display = function() {
+			
+						noStroke();
+						fill(20, 0, 20, map(this.shopBarX, 180, 0, 0, 100));
+						rect(0, 0, width, height);
+			
+						image(imgs.healthBar, 225, this.shopBarX - 180);
+						image(imgs.shopBar, 650 + this.shopBarX, 0);
+			
+			
+						//health bar
+						fill(131, 219, 207);
+						quad(270, 19 + this.shopBarX - 180, 633 - map(Player.health, 100, 0, 0, 365), 19 + this.shopBarX - 180, 603 - map(Player.health, 100, 0, 0, 305), 53 + this.shopBarX - 180, 303, 53 + this.shopBarX - 180);
+			
+			
+						for (var i in this.buttons) {
+							this.buttons[i].run();
+						}
+			
+						this.shopBarX = lerp(this.shopBarX, this.toShopBarX, 0.1);
+			
+						pushMatrix();
+						translate(775 + this.shopBarX, 40);
+						rotate(frameCount);
+						translate(-25, -25);
+						image(imgs.scrap1, 0, 0);
+						popMatrix();
+			
+						fill(240, 250, 250);
+						textAlign(RIGHT);
+						textFont(createFont("Noto Sans Bold"), 16);
+						text("Scraps: " + Player.scraps, 875 + this.shopBarX, 48);
+						textAlign(CENTER, CENTER);
+			
+						if (_BossBattle.texts[floor(_BossBattle.time / 500)]) {
+							pushMatrix();
+							translate(450, 300);
+							scale(1, -1);
+							translate(-450, -300);
+							image(imgs.textBar, 225, this.shopBarX - 180 - this.textY);
+							popMatrix();
+							
+							text(_BossBattle.texts[floor(_BossBattle.time / 500)], 450, 740 - this.shopBarX + this.textY);
+			
+							if (_BossBattle.time % 500 > 450) {
+								this.toTextY = 100;
+							} else if (_BossBattle.time % 500 < 50) {
+								this.toTextY = 0;
+							}
+			
+							if (_BossBattle.texts[floor(_BossBattle.time / 500)] === "") {
+								this.toTextY = 100;
+							}
+						}
+			
+						this.textY = lerp(this.textY, this.toTextY, 0.1);
+			
+					};
+					_UpgradeSystem.update = function() {
+						if (Math.mouseRect(825, 0, 75, 130) && this.toShopBarX === 180 && _BossBattle.opacity === 0) {
+							this.toShopBarX = 0;
+							_BossBattle.paused = true;
+						} else if (this.toShopBarX === 0 && !(Math.mouseRect(675, 0, 250, 130) || Math.mouseRect(725, 130, 200, 500))) {
+							this.toShopBarX = 180;
+							_BossBattle.paused = false;
+						}
+			
+					};
+					_UpgradeSystem.run = function() {
+						this.update();
+						this.display();
+					};
+			
+					return _UpgradeSystem;
+				})();
+			
+				var ScrapSystem = (function() {
+					var _Scrap = function(config) {
+						this.x = config.x;
+						this.y = config.y;
+			
+						this.r = random(0, 360);
+						this.rotSpeed = config.rotSpeed || 3;
+						this.scale = 1;
+			
+						this.xv = config.xv;
+						this.yv = config.yv;
+			
+						this.imgPath = "scrap" + ~~random(1, 5);
+			
+						this.splicing = false;
+					};
+					_Scrap.prototype.display = function() {
+						pushMatrix();
+						translate(this.x + 25, this.y + 25);
+						rotate(this.r);
+						scale(this.scale);
+						translate(-25, -25);
+			
+						image(imgs[this.imgPath], 0, 0);
+			
+						popMatrix();
+					};
+					_Scrap.prototype.update = function() {
+			
+						if (!_BossBattle.paused) {
+							this.r += this.rotSpeed;
+			
+							this.x += this.xv;
+							this.y += this.yv;
+			
+							if (this.splicing) {
+								this.scale = lerp(this.scale, 0, 0.1);
+							}
+						}
+					};
+					_Scrap.prototype.getCollisionBox = function() {
+						return ([{
+								x: this.x,
+								y: this.y
+							},
+							{
+								x: this.x + 50,
+								y: this.y
+							},
+							{
+								x: this.x + 50,
+								y: this.y + 50
+							},
+							{
+								x: this.x,
+								y: this.y + 50
+							},
+						]);
+					};
+					_Scrap.prototype.checkCollision = function() {
+						if (Math.polyPoly(this.getCollisionBox(), Player.getCollisionBox())) {
+							this.splicing = true;
+			
+						}
+					};
+			
+					var _ScrapSystem = [];
+					_ScrapSystem.add = function(config) {
+						this.push(new_.call(_Scrap, config));
+					};
+					_ScrapSystem.run = function() {
+						for (var i = 0; i < this.length; i++) {
+							this[i].update();
+							this[i].checkCollision();
+							this[i].display();
+						}
+						for (var i = 0; i < this.length; i++) {
+							if (this[i].scale < 0.01) {
+								this.splice(i, 1);
+								Player.scraps++;
+							} else if (this.x < -100) {
+								this.splice(i, 1);
+							}
+						}
+					};
+					return _ScrapSystem;
+				})();
+			
+				_BossBattle.waves = [
+					"", "S", "SS", "SS", "SSS", "L", "LL", "LS", "LLL", "LLLSSS", "", "H", "LH", "SSSH", "SLH", "SLH", "SSSS", "HHH", "LL", "SSLL", "D", "DD", "DDS", "DLS", "DHS", "DHLS", "LLL", "S", "HDS", "HHHHH", "K", "KKK", "KKSSS", "KHHD", "KSLLK", "KLLSS", "DDDK", "KKK", "A", "AAA", "LLLAA", "SSDDA", "HHKK", "AAASS", "KKKAA", "AASSL","S", "M", "KKKK",  "LLL"
+				];
+				_BossBattle.texts = [
+				    "Hostile forces incoming.\nDestroy them immediately!", "", "", "", "", "A new enemy class inbound", "", "", "", "They're everywhere!", "Homing missiles en route", "","","","All three at once now","","","Upgrade your health regen\nto stay alive longer","","","Don't try to take this\nnext one head on.","","","","We're getting closer\n to the source","","","","","Get ready to run!","Avoid kamikaze space fighters","","","","They just keep coming!","","","","Armored transport ships deal extra damage","","","","","","","The Mothership is the nexus\nthat connects the entire starfleet","She is the source of the hounds\ninvading your world.","Destroy her to save Apocalypta!"];
+				_BossBattle.defeat = function (opac){
+			        noStroke();
+			        fill(189, 28, 84,opac/3);
+			        rect(0,0,900,600);
+			        
+			        pushMatrix();
+			        translate(450,300);
+			        scale(max((opac - 100)/255,0));
+			        translate(-450,-300);
+			        image(imgs.redLaurel,0,0);
+			        popMatrix();
+			        
+			        pushMatrix();
+			            
+			        translate(450,300);
+			        scale(opac/255);
+			        translate(-450,-300);
+			        
+			        textFont(createFont('Marcellus Bold'),90);
+			            
+			        fill(0,opac/5);
+			        text('Defeat',450,280);
+			            
+			        fill(255,opac);
+			        text('Defeat',450,275);
+			        
+			        popMatrix();
+			        
+			        pushMatrix();
+			        translate(450,300);
+			        scale(map(opac,0,255,2,1));
+			        translate(-450,-300);
+			        image(imgs.vingette,0,0);
+			        popMatrix();
+			    };
+			    _BossBattle.victory = function(opac){
+			        noStroke();
+			        fill(28, 143, 189,opac/3);
+			        rect(0,0,900,600);
+			        
+			        pushMatrix();
+			        translate(450,300);
+			        scale(max((opac - 100)/255,0));
+			        translate(-450,-300);
+			        image(imgs.laurel,0,0);
+			        popMatrix();
+			        
+			        pushMatrix();
+			            
+			        translate(450,300);
+			        scale(opac/255);
+			        translate(-450,-300);
+			        
+			        textFont(createFont('Marcellus Bold'),90);
+			            
+			        fill(0,opac/5);
+			        text('Victory',450,275);
+			            
+			        fill(255,opac);
+			        text('Victory',450,270);
+			        
+			        popMatrix();
+			        
+			        pushMatrix();
+			        translate(450,300);
+			        scale(map(opac,0,255,2,1));
+			        translate(-450,-300);
+			        image(imgs.vingette,0,0);
+			        popMatrix();
+			    };
+				_BossBattle.add = function(type) {
+					switch (type) {
+						case "S":
+							_BossBattle.enemies.push(new_.call(EnemySpaceFighter, {
+								x: random(1000, 1500),
+								y: random(75, 525),
+								bodyImg: "enemyFighterBody",
+								wingImg: "enemyFighterWing",
+								r: -90,
+								damage: 5,
+								health: 50,
+							}));
+							break;
+						case "L":
+							_BossBattle.enemies.push(new_.call(EnemyLaserFighter, {
+								x: random(1000, 1200),
+								y: random() < 0.5 ? random(-500, 0) : random(600, 650),
+								bodyImg: "enemyLaserFighterBody",
+								wingImg: "enemyLaserFighterWing",
+								wingRotRange: {
+									attack: 20,
+									acc: -10,
+								},
+								r: -90,
+								damage: 0.75,
+								health: 150,
+							}));
+							break;
+						case "H":
+							_BossBattle.enemies.push(new_.call(EnemyHomingFighter, {
+								x: random(1000, 1500),
+								y: random(75, 525),
+								bodyImg: "enemyHomingFighterBody",
+								wingImg: "enemyHomingFighterWing",
+								wingRotRange: {
+									attack: 20,
+									acc: -10,
+								},
+								r: -90,
+								damage: 15,
+								health: 30,
+							}));
+							break;
+						case "K":
+							_BossBattle.enemies.push(new_.call(EnemyKamikazeFighter, {
+								x: random(1000, 1500),
+								y: random(75, 525),
+								bodyImg: "enemyKamikazeFighterBody",
+								wingImg: "enemyKamikazeFighterWing",
+								wingRotRange: {
+									attack: 0,
+									acc: 0,
+								},
+								r: -90,
+								damage: 0.75,
+								health: 50,
+							}));
+							break;
+						case "A":
+							_BossBattle.enemies.push(new_.call(EnemyArmoredFighter, {
+								x: random(1000, 1500),
+								y: random(75, 525),
+								bodyImg: "enemyArmoredFighterBody",
+								wingImg: "enemyArmoredFighterWing",
+								wingRotRange: {
+									attack: 20,
+									acc: -10,
+								},
+								r: -90,
+								health: 200,
+								damage: 20,
+							}));
+							break;
+						case "D":
+							_BossBattle.enemies.push(new_.call(EnemyDoubleFighter, {
+								x: random(1000, 1500),
+								y: random(75, 525),
+								bodyImg: "enemyDoubleFighterBody",
+								wingImg: "enemyDoubleFighterWing",
+								wingRotRange: {
+									attack: 20,
+									acc: -10,
+								},
+								r: -90,
+								health: 80
+							}));
+							break;
+			
+						case "M":
+							_BossBattle.enemies.push(new_.call(EnemyMothership, {
+								x: 1000,
+								y: random(100, 500),
+								bodyImg: "enemyMothershipBody",
+								wingImg: "enemyMothershipWing",
+								wingRotRange: {
+									attack: 20,
+									acc: -10,
+								},
+								r: -90,
+								lerpSpeed: 0.03,
+								health: 2000,
+							}));
+							break;
+					}
+				};
+				_BossBattle.handleWaves = function() {
+			
+					if (!_BossBattle.paused) {
+						this.time++;
+			
+			
+						if (this.time % 500 === 0) {
+			
+							if (floor(this.time / 500) < _BossBattle.waves.length) {
+								var currentWave = _BossBattle.waves[floor(this.time / 500)];
+								for (var i = 0; i < currentWave.length; i++) {
+									_BossBattle.add(currentWave[i]);
+								}
+							}
+						}
+					}
+				};
+				_BossBattle.drawSpace = function() {
+					for (var i = 0; i < this.backgrounds.length; i++) {
+			
+						if (!_BossBattle.paused) {
+							this.backgrounds[i].x--;
+						}
+						if (this.backgrounds[i].x < -900) {
+							this.backgrounds[i].x = 1900;
+						}
+						image(imgs[this.backgrounds[i].img], this.backgrounds[i].x, -12, 900, 624);
+					}
+			
+					this.backgrounds.sort(function(a, b) {
+						return (b.x - a.x);
+					});
+			
+			
+				};
+				_BossBattle.shake = function() {
+				    if(_BossBattle.opacity === 0){
+					        _BossBattle.cam.x = random(-6, 6);
+					    _BossBattle.cam.y = random(-6, 6);
+				    }
+				};
+				_BossBattle.run = function() {
+			
+					pushMatrix();
+					translate(_BossBattle.cam.x, _BossBattle.cam.y);
+			
+					_BossBattle.drawSpace();
+					_BossBattle.handleWaves();
+					ScrapSystem.run();
+					ParticleSystem.run();
+					BulletSystem.run();
+			
+					Player.run();
+			
+					var collision = false;
+					for (var i = 0; i < _BossBattle.enemies.length; i++) {
+						_BossBattle.enemies[i].run();
+						_BossBattle.enemies[i].healthBar();
+			
+						if (Math.polyPoly(Player.getCollisionBox(), _BossBattle.enemies[i].getCollisionBox()) && _BossBattle.opacity === 0) {
+							_BossBattle.shake();
+							Player.health -= 1;
+							if (_BossBattle.enemies[i].bodyImg === "enemyKamikazeFighterBody") {
+								Player.health -= 1;
+							}
+							_BossBattle.enemies[i].health -= 1;
+							collision = true;
+						}
+			
+						if (_BossBattle.enemies[i].health <= 0 || _BossBattle.enemies[i].x < -200) {
+							_BossBattle.enemies[i].splicing = true;
+						}
+					}
+			
+					for (var i = 0; i < _BossBattle.enemies.length; i++) {
+			
+						var Enemy = _BossBattle.enemies[i];
+						if (Enemy.splicing) {
+			
+			
+							var x = Enemy.x + cos(Enemy.r + 90) * 50;
+							var y = Enemy.y + sin(Enemy.r + 90) * 50;
+							for (var j = 0; j < 200; j++) {
+								ParticleSystem.add({
+									x: x + random(-20, 20),
+									y: y + random(-20, 20),
+									s: random(5, 10),
+									clr: color(220, 114 + random(-30, 30), 20),
+									xv: random(-2, 2),
+									yv: random(-2, 2),
+									rotSpeed: 3,
+									fadeSpeed: random(5, 10),
+									shrinkSpeed: random(0.2, 0.35),
+								});
+							}
+							for (var j = 0; j < ~~random(1, 4); j++) {
+								ScrapSystem.add({
+									x: x + random(-20, 20),
+									y: y + random(-20, 20),
+									rotSpeed: random(2, 4),
+									xv: random(-1, -1.5),
+									yv: random(-1, 1),
+								});
+							}
+							_BossBattle.enemies.splice(i, 1);
+						}
+					}
+			
+					if (!collision) {
+						_BossBattle.cam.x = 0;
+						_BossBattle.cam.y = 0;
+					}
+					
+					popMatrix();
+			
+					UpgradeButtons.run();
+					if (Player.health <= 0) {
+						_BossBattle.paused = true;
+						_BossBattle.defeat(_BossBattle.opacity);
+						_BossBattle.opacity = lerp(_BossBattle.opacity, 255, 0.05);
+						
+						pushMatrix();
+						translate(450, 350);
+						scale(_BossBattle.opacity/255);
+						translate(-450,-350);
+						Buttons.replay.display();
+						
+						if(_BossBattle.opacity > 254){
+						    Buttons.replay.update();
+						}
+						popMatrix();
+						
+						Player.health = constrain(Player.health, 0, Player.maxHealth);
+						Buttons.replay.onClick = function(){
+					        Player.health = 100;
+					        _BossBattle.time = 0;
+					        _BossBattle.opacity = 0;
+					        _BossBattle.enemies = [];
+					        BulletSystem.length = 0;
+					        ParticleSystem.length = 0;
+					        ScrapSystem.length = 0;
+					        Player.x = 100;
+					        _BossBattle.paused = false;
+					        Player.scraps = 0;
+						    Player.damage = 10;
+						    Player.fireRate = 25;
+						    Player.healthRegenRate = 0.05;
+					        UpgradeButtons.buttons.reload.numBars = 1;
+					        UpgradeButtons.buttons.shields.numBars = 1;
+					        UpgradeButtons.buttons.damage.numBars = 1;
+					        
+					        UpgradeButtons.buttons.reload.upgradeCost = 2;
+					        UpgradeButtons.buttons.shields.upgradeCost = 2;
+					        UpgradeButtons.buttons.damage.upgradeCost = 2;
+						};
+					}
+					
+					if(floor(_BossBattle.time / 500) >= _BossBattle.waves.length && _BossBattle.enemies.length === 0){
+					    _BossBattle.paused = true;
+					    
+					    _BossBattle.victory(_BossBattle.opacity);
+						_BossBattle.opacity = lerp(_BossBattle.opacity, 255, 0.05);
+						
+						pushMatrix();
+						translate(450, 350);
+						scale(_BossBattle.opacity/255);
+						translate(-450,-350);
+						Buttons.next.display();
+						
+						if(_BossBattle.opacity > 254){
+						    Buttons.next.update();
+						}
+						popMatrix();
+					}
+			
+			
+				};
+			
+				return _BossBattle.run;
+			})();
+			
+			var Scenes = (function() {
+				var curLoad = 0;
+			
+				//Custom font. Sue me.
+				var requestFont = (function() {
+					return this.Function("gfName",
+						"gfName = gfName.replace (/\\s+/g, '+');" +
+						"var subsets = Array.prototype.slice.call(arguments, 1, arguments.length - 1);" +
+						"var url = 'https://fonts.googleapis.com/css?family=' + gfName + ( subsets.length > 0 ? '&amp;subset=' + subsets : ''), callback = arguments[arguments.length - 1];" +
+						"var gfs = document.querySelectorAll('link[href=\"' + url+'\"]');" +
+						"if (!gfs.length) {" +
+						"var f = document.createElement('link');" +
+						"f.setAttribute('rel', 'stylesheet');" +
+						"f.setAttribute('type', 'text/css');" +
+						"f.onload = callback;" +
+						"f.setAttribute('href', url);" +
+						"document.head.appendChild(f);" +
+						"} else if (typeof callback === 'function') {" +
+						"callback.call(gfs[0]);" +
+						"}"
+					);
+				})();
+				requestFont('Noto Sans|Marcellus');
+				
+				//for it to load for some people
+				(function() {return this;})().LoopProtector.prototype.leave = function() {};
+			
+				//Check mouse collisions
+				Math.mouseRect = function(x, y, w, h) {
+					return (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h);
+				};
+			
+				//Collision code stolen from @TheBiggestNerdKA 
+				Math.polyPoint = function(vertices, px, py) {
+					var collision = false;
+					var next = 0;
+					for (var current = 0; current < vertices.length; current++) {
+						next = current + 1;
+						if (next === vertices.length) {
+							next = 0;
+						}
+						var vc = vertices[current];
+						var vn = vertices[next];
+						if (((vc.y > py && vn.y < py) || (vc.y < py && vn.y > py)) && (px < (vn.x - vc.x) * (py - vc.y) / (vn.y - vc.y) + vc.x)) {
+							collision = !collision;
+						}
+					}
+					return collision;
+				};
+			
+				Math.lineLine = function(x1, y1, x2, y2, x3, y3, x4, y4) {
+					var uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
+					var uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
+					return uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1;
+				};
+				Math.polyLine = function(vertices, x1, y1, x2, y2) {
+					var next = 0;
+					for (var current = 0; current < vertices.length; current++) {
+						next = current + 1;
+						if (next === vertices.length) {
+							next = 0;
+						}
+						if (Math.lineLine(x1, y1, x2, y2, vertices[current].x, vertices[current].y, vertices[next].x, vertices[next].y)) {
+							return true;
+						}
+					}
+					return false;
+				};
+				Math.polyPoly = function(p1, p2) {
+					var next = 0;
+					for (var current = 0; current < p1.length; current++) {
+						next = current + 1;
+						if (next === p1.length) {
+							next = 0;
+						}
+						if (Math.polyLine(p2, p1[current].x, p1[current].y, p1[next].x, p1[next].y)) {
+							return true;
+						}
+						if (Math.polyPoint(p1, p2[0].x, p2[0].y)) {
+							return true;
+						}
+					}
+					return false;
+				};
+			
+				mouseClicked = function() {
+					click = true;
+				};
+				
+				var scrollY = 0;
+				
+				return ({
+					load: function() {
+						background(255, 0);
+						noStroke();
+						var img = imgs[Object.keys(imgs)[curLoad]];
+						img.d();
+						imgs[Object.keys(imgs)[curLoad]] = get(0, 0, img.w, img.h);
+						curLoad++;
+			
+						if (curLoad >= Object.keys(imgs).length) {
+							scene = "logo";
+						}
+						
+						textAlign(CENTER, CENTER);
+						background(0);
+						textFont(createFont("Marcellus Bold"), 50);
+						fill(255);
+						text("Loading", 450, 300);
+			
+			            strokeWeight(10);
+						noFill();
+						stroke(255);
+						strokeCap(SQUARE);
+						arc(450, 300, 300, 300, curLoad * 5, curLoad * 5 + map(curLoad, 0, Object.keys(imgs).length, 0, 360));
+						strokeCap(ROUND);
+						
+					},
+					menu: function() {
+						image(imgs.menuBackground, 0, 0);
+						image(imgs.starFleetTitle, 0, 50);
+			
+						Buttons.play.run();
+						Buttons.how.run();
+						Buttons.about.run();
+						
+						image(imgs.THF, 0, 450, 150, 150);
+						image(imgs.LKLogo, 750, 475, 100, 100);
+						
+						if(mouseIsPressed && mouseX < 30 && mouseY < 30){
+						    image(imgs.bossBattleThumbnail,0,0, 900, 600);
+						}
+					},
+					how:function(){
+					    image(imgs.apocalypseBackdrop,0,0);
+			            image(imgs.redLaurel,75,-100,750,500);
+			            image(imgs.Instructions,225,0,450,300);
+			            image(imgs.howToBossBattle,0,25);
+			            Buttons.menu.run();  
+					},
+					win:function(){
+					    image(imgs.apocalypseBackdrop,0,0);
+			            
+			            pushMatrix();
+			            translate(0, ~~-scrollY);
+			            image(imgs.redLaurel,75,-100,750,500);
+			            image(imgs.Credits,225,0,450,300);
+			            textFont(createFont('Noto Sans Bold'),25);
+			            fill(255);
+			            textAlign(RIGHT,TOP);
+			            text('Graphics\nGameplay\nTesting\n\n\nGreat Hair\nSupport',440,225);
+			            fill(255,200);
+			            textAlign(LEFT,TOP);
+			            text('Liam K.\nLiam K.\nLiam K.\nSomebody\nSomebody Else\nLiam K.\nKA Community',460,225);
+			            
+			            textAlign(CENTER,CENTER);
+			            text("Recently, I have noticed that many programmers have neglected graphics within their game design, instead adopting a basic color scheme with solid colors. I created this program as a showcase to inspire you to always add the tiniest details and fully integrate graphics into your projects. While this program is essentially a souped up dodge game, you can see for yourself what the additional functionality of bullet systems, object inheritance, and player rigs/animations brings to the table.\n\nNow as a college sophomore studying mechanical and aerospace engineering, I have come a long way as a programmer. The support from the KA community over the last four years has been crucial to my success. Thank you everyone for helping me along the way!", 200, 500, 500, 850);
+			            popMatrix();
+			            
+			            
+			            if(scrollY < 800){
+			                scrollY += 0.5;
+			            }
+					},
+					howBossBattle:function(){
+					    image(imgs.apocalypseBackdrop,0,0);
+			            image(imgs.redLaurel,75,-100,750,500);
+			            image(imgs.Instructions,225,0,450,300);
+			            image(imgs.howToBossBattle,0,25);
+			            Buttons.continue.run();  
+					},
+					about:function(){
+					    image(imgs.apocalypseBackdrop,0,0);
+			            image(imgs.redLaurel,75,-100,750,500);
+			            image(imgs.About,225,0,450,300);
+			            fill(240,250,250);
+			            textFont(createFont("Noto Sans"), 20);
+			            textAlign(LEFT, CENTER);
+			            text("I created this program as the final boss battle for my Apocalypta game. Apocalypta is a large world RPG that I have been working on for a few years now, and hope to one day release.\n\nThis program was also created for The Hotlist Forge 2024.", 250, 175, 400, 300);
+			            textAlign(CENTER,CENTER);
+			            Buttons.menu.run();  
+					},
+					play: BossBattle,
+					logo:LKLogo.run,
+				});
+			})();
+			
+			draw = function() {
+			    cursor("default");
+				Scenes[scene]();
+				Trans.run();
+				click = false;
+			};
+			
+			
+			
+			
+			
+		}
+		
+		runPJS(program);
+		
+		// Add reload button on KA --> <script>
+		
+	</script>
+</body>
+
+</html>
